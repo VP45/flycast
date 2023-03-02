@@ -1,3 +1,4 @@
+import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 import './globals.css'
 import Providers from './Providers'
@@ -14,10 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='max-w-[1420px] mx-auto flex justify-center items-center flex-col'>
+      <body className='max-w-[1400px] mx-auto flex justify-center items-center flex-col'>
          <Providers>
           <Navbar/>
           {children}
+          <Footer/>
          </Providers>
         </body>
     </html>
