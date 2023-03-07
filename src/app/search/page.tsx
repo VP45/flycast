@@ -55,7 +55,7 @@ const ResultPage = (props: Props) => {
               <svg
                 className="w-12 h-10 p-2 mx-2 self-center bg-gray-400 rounded-full fill-current text-white"
                 viewBox="0 0 64 64"
-                pointer-events="all"
+                pointerEvents="all"
                 aria-hidden="true"
                 role="presentation"
               >
@@ -134,7 +134,7 @@ const ResultPage = (props: Props) => {
               <svg
                 className="w-12 h-10 p-2 mx-2 self-center bg-gray-400 rounded-full fill-current text-white"
                 viewBox="0 0 64 64"
-                pointer-events="all"
+                pointerEvents="all"
                 aria-hidden="true"
                 role="presentation"
               >
@@ -213,7 +213,7 @@ const ResultPage = (props: Props) => {
               <svg
                 className="w-12 h-10 p-2 mx-2 self-center bg-gray-400 rounded-full fill-current text-white"
                 viewBox="0 0 64 64"
-                pointer-events="all"
+                pointerEvents="all"
                 aria-hidden="true"
                 role="presentation"
               >
@@ -292,7 +292,7 @@ const ResultPage = (props: Props) => {
               <svg
                 className="w-12 h-10 p-2 mx-2 self-center bg-gray-400 rounded-full fill-current text-white"
                 viewBox="0 0 64 64"
-                pointer-events="all"
+                pointerEvents="all"
                 aria-hidden="true"
                 role="presentation"
               >
@@ -371,7 +371,7 @@ const ResultPage = (props: Props) => {
               <svg
                 className="w-12 h-10 p-2 mx-2 self-center bg-gray-400 rounded-full fill-current text-white"
                 viewBox="0 0 64 64"
-                pointer-events="all"
+                pointerEvents="all"
                 aria-hidden="true"
                 role="presentation"
               >

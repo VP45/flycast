@@ -1,16 +1,20 @@
+import Image from "next/image";
 import React from "react";
-import Logo from "../assets/logo.png"
+import LOGO from "../assets/FlyCast_Orange.png";
+
 type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer className="w-full p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900">
+    <footer className="w-full p-4 bg-white rounded-lg shadow md:px-6 md:py-8 my-bg-color">
       <div className="sm:flex sm:items-center sm:justify-between">
         <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">
-          <img
-            src={Logo.src}
-            className="h-8 mr-3"
+          <Image
+            src={LOGO.src}
+            className="h-9 w-9 mr-3 sm:h-12 sm:w-12"
             alt="FlyCast Logo"
+            width={60}
+            height={60}
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             FlyCast

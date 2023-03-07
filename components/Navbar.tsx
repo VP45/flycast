@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import DarkModeBtn from "./DarkModeBtn";
-import LOGO from "../assets/logo.png";
+import LOGO from "../assets/FlyCast_Orange.png";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -19,12 +19,12 @@ const Navbar = () => {
   console.log("Hellooo", context.data);
   // Testing codes ends ***********************************************
   return (
-    <nav className="bg-white px-2 sm:px-4 pb-2.5 pt-2.5 dark:bg-gray-900 sticky w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-white px-2 sm:px-4 pb-2.5 pt-2.5 my-bg-color sticky w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link href="/" className="flex items-center">
           <Image
             src={LOGO}
-            className="mr-3 sm:h-9"
+            className="h-9 w-9 mr-3 sm:h-12 sm:w-12"
             alt="Logo"
             width={60}
             height={60}
@@ -43,7 +43,7 @@ const Navbar = () => {
 
           <button
             onClick={() => router.push("/login")}
-            className={` inline-flex items-center justify-center px-3 py-1.5 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900`}
+            className={` inline-flex items-center justify-center px-3 py-1.5 mr-3 text-base font-medium text-center text-white rounded-lg my-btn-color`}
           >
             Login
           </button>
@@ -52,7 +52,7 @@ const Navbar = () => {
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
-          <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:my-bg-color dark:border-gray-700">
             <li>
               <a
                 href="#"

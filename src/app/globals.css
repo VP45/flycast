@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white dark:bg-[#060313] text-gray-900 dark:text-white;
+  }
+}
+
+@layer components {
+  .card-zoom {
+    @apply hover:scale-105 transition-all ease-in-out duration-200;
+  }
+  .new-line {
+    white-space: pre-wrap;
+  }
+
+  .my-btn-color{
+    @apply bg-[#ff6f2a] hover:bg-[#d8581d];
+  }
+
+  .my-bg-color{
+    @apply bg-white dark:bg-gray-900;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+ 
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background-color: #ff6f2a;
+  color: white;
+}

@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='max-w-[1400px] mx-auto flex justify-center items-center flex-col'>
+      <body className='w-screen max-w-screen-2xl mx-auto flex justify-center items-center flex-col'>
          <Providers>
           <Navbar/>
           {children}
