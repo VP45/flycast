@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Context, useState } from "react";
 import { IoIosAirplane } from "react-icons/io";
 import { BiCurrentLocation } from "react-icons/bi";
 import {
@@ -8,30 +8,56 @@ import {
   BsSearch,
 } from "react-icons/bs";
 import Datepicker from "react-tailwindcss-datepicker";
-import { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import { AiOutlineSwap } from "react-icons/ai";
 import { FaChild } from "react-icons/fa";
 import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import AirportsJSON from "../assets/airports.json";
-import { Airports } from "../types/Airport";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { DateValueType } from "react-tailwindcss-datepicker/dist/types";
+import { useRouter } from "next/navigation";
+import { ContextType } from "../types/ContextTypes";
 type Props = {};
 
+
 const SearchForm = (props: Props) => {
+  const {
+    source,
+    setSource,
+    dst,
+    setDst,
+    departDate,
+    setDepartDate,
+    arrivalDate,
+    setArrivalDate,
+    adults,
+    setAdults,
+    childrenn,
+    setChildrenn,
+    airports,
+    setAirports,
+    classType,
+    setClassType,
+    date,
+    setDate,
+  }: ContextType = useContext(AppContext);
+
+  const router = useRouter();
   const [isOneWay, setIsOneWay] = useState(0);
 
-  ///  FORM INPUT STATES.....
-  const [source, setSource] = useState("");
-  const [dst, setDst] = useState("");
-  const [departDate, setDepartDate] = useState();
-  const [arrivalDate, setArrivalDate] = useState();
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  const [airports, setAirports] = useState<Airports>([]);
-  const [classType, setClassType] = useState("Economy");
-  const [date, setDate] = useState<DateValueType>({
-    startDate: new Date(),
-    endDate: new Date().setMonth(3).toString(), /// ifff errrr  change to Date().setMonth(3) only   🌿🌿🌿
-  });
+  // State for form inputs
+  // const [source, setSource] = useState("");
+  // const [dst, setDst] = useState("");
+  // const [departDate, setDepartDate] = useState();
+  // const [arrivalDate, setArrivalDate] = useState();
+  // const [adults, setAdults] = useState(1);
+  // const [childrenn, setChildrenn] = useState(0);
+  // const [airports, setAirports] = useState([]);
+  // const [classType, setClassType] = useState("Economy");
+  // const [date, setDate] = useState({
+  //   startDate: new Date(),
+  //   endDate: new Date().setMonth(3).toString(), /// ifff errrr  change to Date().setMonth(3) only   🌿🌿🌿
+  // });
 
   // Hadlers for form inputs .......
   const handleValueChange = (newValue: DateValueType) => {
@@ -40,14 +66,48 @@ const SearchForm = (props: Props) => {
   };
 
   const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("newValue:", e.target.value);
+    // console.log("newValue:", e.target.value);
     const res = AirportsJSON.filter((airport) => {
-      const fullAirportDetail = `${airport.name} ${airport.iata} ${airport.icao} ${airport.city} ${airport.country}`.toLowerCase();
+      const fullAirportDetail =
+        `${airport.name} ${airport.iata} ${airport.icao} ${airport.city} ${airport.country}`.toLowerCase();
+        // console.log(fullAirportDetail)
       return fullAirportDetail.includes(e.target.value.toLowerCase());
     });
     setAirports(res);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // form validations...
+    if (source === "") {
+      alert("Please select source airport");
+      return;
+    }
+    if (dst === "") {
+      alert("Please select destination airport");
+      return;
+    }
+    if (departDate?.startDate === "") {
+      alert("Please select departure date");
+      return;
+    }
+    if (isOneWay === 1 && arrivalDate?.endDate === "") {
+      alert("Please select arrival date");
+      return;
+    }
+    if (adults === 0) {
+      alert("Please select number of adults");
+      return;
+    }
+    if (classType === "") {
+      alert("Please select class type");
+      return;
+    }
+
+    router.push(`/search`)
+    console.log("Form Submitted!");
+  }
   return (
     <div className="my-bg-color w-full sm:pt-10 sm:pb-10 sm:pl-16 sm:pr-16 flex items-center justify-center">
       <div className="w-full lg:w-[90%] sm:border-2 rounded-lg p-4 sm:p-16">
@@ -58,24 +118,8 @@ const SearchForm = (props: Props) => {
           </span>{" "}
           sites!
         </h1>
-        <form className="w-full flex flex-col gap-4">
+        <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
-            {/* <div className="sm:hidden">
-              <label htmlFor="tabs" className="sr-only">
-                Select your country
-              </label>
-              <select
-                defaultValue={0}
-                onChange={() => {
-                  setIsOneWay(isOneWay == 0 ? 1 : 0);
-                }}
-                id="tabs"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option value={0}>Oneway</option>
-                <option value={1}>Rourd Trip</option>
-              </select>
-            </div> */}
             <ul className="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow flex dark:divide-gray-700 dark:text-gray-400">
               <li className="w-fit">
                 <button
@@ -129,7 +173,7 @@ const SearchForm = (props: Props) => {
               />
               <datalist id="airports-src">
                 {airports.map((airport) => {
-                  return <option value={airport.name} key={airport.iata} />;
+                  return <option value={`${airport.iata} ${airport.name}`} key={airport.iata} />;
                 })}
               </datalist>
             </div>
@@ -151,7 +195,7 @@ const SearchForm = (props: Props) => {
               />
               <datalist id="airports-dst">
                 {airports.map((airport) => {
-                  return <option value={airport.name} key={airport.iata} />;
+                  return <option value={`${airport.iata} ${airport.name}`} key={airport.iata} />;
                 })}
               </datalist>
             </div>
@@ -180,8 +224,8 @@ const SearchForm = (props: Props) => {
                 type="number"
                 step="1"
                 placeholder="Children"
-                value={children}
-                onChange={(e) => setChildren(parseInt(e.target.value))}
+                value={childrenn}
+                onChange={(e) => setChildrenn(parseInt(e.target.value))}
                 min={0}
                 max={9}
               />

@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const context = useContext(AppContext);
 
-  console.log("Hellooo", context.data);
+  // console.log("Hellooo", context.data);
   // Testing codes ends ***********************************************
   return (
     <nav className="bg-white px-2 sm:px-4 pb-2.5 pt-2.5 my-bg-color sticky w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
