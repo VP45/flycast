@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Lottie from "react-lottie";
-import Flight from "./flight.json";
+// import Flight from "./flight.json";
 // import Flight from "../assets/flight_gif.gif"
 type Props = {};
 
