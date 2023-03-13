@@ -7,7 +7,11 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { Airport } from "../../../types/Airport";
 import AirportJson from "../../../assets/airports.json";
+import Hotels from "../../../assets/Hotels.json";
+import { HotelType } from "../../../types/Hotels";
 import axios from "axios";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import parse from "html-react-parser";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -30,35 +34,37 @@ const ResultPage = (props: Props) => {
         // mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
-          'API-Key': 'AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U'
-        }
+          "API-Key": "AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U",
+        },
       }
-    ).then(res => {
-      console.log("res",res)
-      return res.json()
-    }).then(data => {
-      console.log("Hotels", data);
-    })
-    .catch(err => {
-      console.log("Error",err)
-    })
+    )
+      .then((res) => {
+        console.log("res", res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Hotels", data);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
 
-  //   let config = {
-  //     method: "get",
-  //     url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=19.0785451%2C72.878176&radius=15000&type=lodging&key=AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     mode : "no-cors"
-  //   };
+    //   let config = {
+    //     method: "get",
+    //     url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=19.0785451%2C72.878176&radius=15000&type=lodging&key=AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     mode : "no-cors"
+    //   };
 
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //     })
-  //     .catch(function (error) {
-  //       console.log("erooorrrr",error);
-  //     });
+    //   axios(config)
+    //     .then(function (response) {
+    //       console.log(JSON.stringify(response.data));
+    //     })
+    //     .catch(function (error) {
+    //       console.log("erooorrrr",error);
+    //     });
   };
 
   // const fetchTouristPlaces = async (DstAirport: Airport | undefined) => {
@@ -579,252 +585,103 @@ const ResultPage = (props: Props) => {
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-            <div className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img
-                  className="p-8 rounded-t-lg"
-                  src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AfLeUgP7ry8QWp8A6HVV2SjVsTYQy_wlG3rctJ63cx7bPvpYwnmXzmvJP8H4kBg56xPQRGpiO6XPjLRyqIqdl1MpY1u-DrCqeBqUD9nsZ2jGsQwz5WF9q2rxURX2IVbZ2xSfa-c2siUqog8OIiDwn0OjzcJFuZBm1TLMWh1U9OFEHJ95LGPU&key=AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U"
-                  alt="product image"
-                />
-              </a>
-              <div className="px-5 pb-5">
-                <a href="#">
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
-                  </h5>
-                </a>
-                <div className="flex items-center mt-2.5 mb-5">
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>First star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Second star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Third star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fourth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fifth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                    5.0
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    $599
-                  </span>
-                  <a
-                    href="#"
-                    className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white"
-                  >
-                    Add to cart
+            {Hotels.map((hotel, index) => {
+              if (!hotel?.photos) {
+                return null;
+              }
+              return (
+                <div
+                  key={index}
+                  className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <a href="#">
+                    <img
+                      className="p-6 rounded-t-lg"
+                      src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${hotel?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+                      alt="product image"
+                    />
                   </a>
+                  <div className="px-5 pb-5">
+                    <a href="#">
+                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        {hotel?.name}
+                      </h5>
+                    </a>
+                    <div className="flex items-center mt-2.5 mb-5">
+                      {hotel?.rating > 0 &&
+                        [...Array(Math.floor(hotel?.rating))].map((index) => {
+                          return (
+                            <FaStar
+                              key={index}
+                              className="w-5 h-5 text-yellow-300"
+                            />
+                          );
+                        })}
+                      {hotel?.rating > 0 &&
+                        hotel?.rating < 5 &&
+                        hotel?.rating % 1 !== 0 && (
+                          <FaStarHalfAlt className="w-5 h-5 text-yellow-300" />
+                        )}
+                      {[...Array(Math.floor(5 - hotel?.rating))].map(
+                        (index) => {
+                          return (
+                            <FaRegStar
+                              key={index}
+                              className="w-5 h-5 text-yellow-300"
+                            />
+                          );
+                        }
+                      )}
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+                        {hotel?.rating}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {hotel?.vicinity}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 my-2">
+                      {hotel?.types.map((type, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-md dark:bg-blue-200 dark:text-blue-800"
+                          >
+                            {type}
+                          </span>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      {hotel?.user_ratings_total && (
+                        <div>
+                          <p>Rated by</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            {hotel?.user_ratings_total} cutomers
+                          </p>
+                        </div>
+                      )}
+
+                      <div
+                        className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white ml-auto"
+                      >
+                        {hotel?.photos &&
+                          hotel?.photos[0]?.html_attributions[0] &&
+                          parse(hotel?.photos[0]?.html_attributions[0],  {
+                            replace: ({attribs}) => {
+                              // console.log(domNode.);
+                              return <a href={attribs.href}>View on map</a>;
+                            }
+                            
+                          })
+                          }
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img
-                  className="p-8 rounded-t-lg"
-                  src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AfLeUgP7ry8QWp8A6HVV2SjVsTYQy_wlG3rctJ63cx7bPvpYwnmXzmvJP8H4kBg56xPQRGpiO6XPjLRyqIqdl1MpY1u-DrCqeBqUD9nsZ2jGsQwz5WF9q2rxURX2IVbZ2xSfa-c2siUqog8OIiDwn0OjzcJFuZBm1TLMWh1U9OFEHJ95LGPU&key=AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U"
-                  alt="product image"
-                />
-              </a>
-              <div className="px-5 pb-5">
-                <a href="#">
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
-                  </h5>
-                </a>
-                <div className="flex items-center mt-2.5 mb-5">
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>First star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Second star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Third star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fourth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fifth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                    5.0
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    $599
-                  </span>
-                  <a
-                    href="#"
-                    className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white"
-                  >
-                    Add to cart
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img
-                  className="p-8 rounded-t-lg"
-                  src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AfLeUgP7ry8QWp8A6HVV2SjVsTYQy_wlG3rctJ63cx7bPvpYwnmXzmvJP8H4kBg56xPQRGpiO6XPjLRyqIqdl1MpY1u-DrCqeBqUD9nsZ2jGsQwz5WF9q2rxURX2IVbZ2xSfa-c2siUqog8OIiDwn0OjzcJFuZBm1TLMWh1U9OFEHJ95LGPU&key=AIzaSyC_A5HGA5UD40AEDoh-cU_z2zOrCA3Ie9U"
-                  alt="product image"
-                />
-              </a>
-              <div className="px-5 pb-5">
-                <a href="#">
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
-                  </h5>
-                </a>
-                <div className="flex items-center mt-2.5 mb-5">
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>First star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Second star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Third star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fourth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>Fifth star</title>
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                    5.0
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    $599
-                  </span>
-                  <a
-                    href="#"
-                    className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white"
-                  >
-                    Add to cart
-                  </a>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,0 +1,295 @@
+[
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.0674785,
+        "lng": 72.8690412
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.06911828029151,
+          "lng": 72.8702401802915
+        },
+        "southwest": {
+          "lat": 19.0664203197085,
+          "lng": 72.8675422197085
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "Sofitel Mumbai BKC",
+    "photos": [
+      {
+        "height": 2028,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/115696486639267576724\">Sofitel Mumbai BKC</a>"
+        ],
+        "photo_reference": "AfLeUgP2yHip1yHvSCQ-lz8zuPForf-a3Dv2nCe-rOH2HVSYl7wWab5eJdZXdC_9-U2l64DjdOMOpBzyXD-GEKT8yOVZOhgKszFeFsVA3Zgw9ln95xSioKigfDkdR-gNBJGSitIeGkuNRkkPbYN4_2r7p5mQexYKpaTyJp4fnuX5fkfOM3ju",
+        "width": 2706
+      }
+    ],
+    "place_id": "ChIJ____C9_I5zsR2230MdoS4xo",
+    "plus_code": {
+      "compound_code": "3V89+XJ Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3V89+XJ"
+    },
+    "rating": 4.6,
+    "reference": "ChIJ____C9_I5zsR2230MdoS4xo",
+    "scope": "GOOGLE",
+    "types": ["lodging", "point_of_interest", "establishment"],
+    "user_ratings_total": 25708,
+    "vicinity": "C 57, Bandra Kurla Complex, Bandra East, Mumbai"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.0666028,
+        "lng": 72.86743179999999
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.0679595802915,
+          "lng": 72.8687403302915
+        },
+        "southwest": {
+          "lat": 19.0652616197085,
+          "lng": 72.86604236970848
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "Trident Hotel Bandra Kurla",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 3000,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/113611477405494716633\">Rahul Bang</a>"
+        ],
+        "photo_reference": "AfLeUgNSmCzeAKw6-K9-94Ssp_FZQlEjey4iPV_t9VOpg_Qam_CkHwd0rRNw8dwfQ5jVcBgdxxbhEBEQC6xtoQ_QYUSTvwwIOUla3lItcd0Ym83FD1ZYx3w8CLi6fiY5RnRrgdAhzJdDypECmINpHaOJ3aSuhZxbmAKrhK780A0AE6jTDNEu",
+        "width": 4000
+      }
+    ],
+    "place_id": "ChIJIagRS-nI5zsRGLstOKTvrHQ",
+    "plus_code": {
+      "compound_code": "3V88+JX Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3V88+JX"
+    },
+    "rating": 4.6,
+    "reference": "ChIJIagRS-nI5zsRGLstOKTvrHQ",
+    "scope": "GOOGLE",
+    "types": [
+      "spa",
+      "bar",
+      "lodging",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 20634,
+    "vicinity": "C 56, G Block BKC, Bandra East, Mumbai"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.0806968,
+        "lng": 72.885526
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.0820980302915,
+          "lng": 72.8867663802915
+        },
+        "southwest": {
+          "lat": 19.0794000697085,
+          "lng": 72.88406841970848
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "Kohinoor Elite",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 1560,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/104195667581477563726\">Kohinoor Elite</a>"
+        ],
+        "photo_reference": "AfLeUgM1UaKheKp1OlfJ90ZiGmWTsJAZdHKB8Nsqq_s013FiVIEMEqzRRhPeRGkIgD0xIcjLNCfmCsB4Nl6OFrFKsRJbrwkiwIfp6I7fR9ul4_AcwpxvkMwcu7bDtYlRTSpiuK2osIXanVdAo2yDE1Uu69i82BK4CRAesb5-wODd5ewxxZTg",
+        "width": 2480
+      }
+    ],
+    "place_id": "ChIJS7bELI_I5zsRerwdkCoB21c",
+    "plus_code": {
+      "compound_code": "3VJP+76 Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3VJP+76"
+    },
+    "rating": 4.1,
+    "reference": "ChIJS7bELI_I5zsRerwdkCoB21c",
+    "scope": "GOOGLE",
+    "types": [
+      "lodging",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 3425,
+    "vicinity": "Kirol Road, Kurla West, Mumbai"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.0604445,
+        "lng": 72.87271419999999
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.0618232302915,
+          "lng": 72.8739923302915
+        },
+        "southwest": {
+          "lat": 19.0591252697085,
+          "lng": 72.87129436970849
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "LA HOTEL METRO",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 479,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/108739977307719526057\">LA HOTEL METRO</a>"
+        ],
+        "photo_reference": "AfLeUgOjJyh-1GXrNg3WhgOPC0i2OsKBlNnWTimrCFDG0hDYa7dxYjSHFJw8En7uknfOt0e2OLhimFRUX5UtdySSJH2azeBoImf8FTCbYrupKSYvTAPysGNZFS4XrNVZm_C3jgYHoaWTkAEkxTP03S2TQLYcve9YUbidJiOJGiKI1Ae_3htZ",
+        "width": 853
+      }
+    ],
+    "place_id": "ChIJ46zENsDI5zsRJ9jSWG0FSSw",
+    "plus_code": {
+      "compound_code": "3V6F+53 Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3V6F+53"
+    },
+    "rating": 4.3,
+    "reference": "ChIJ46zENsDI5zsRJ9jSWG0FSSw",
+    "scope": "GOOGLE",
+    "types": ["lodging", "point_of_interest", "establishment"],
+    "user_ratings_total": 1389,
+    "vicinity": "opp. Kurla garden, La Hotel Metro near BKC, opp. Kurla garden, Kurla West, Mumbai"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.099735,
+        "lng": 72.888002
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.10108518029151,
+          "lng": 72.88932288029149
+        },
+        "southwest": {
+          "lat": 19.0983872197085,
+          "lng": 72.88662491970848
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "OYO 10103 Hotel Aviva",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 427,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/102145623220814279630\">OYO 10103 Hotel Aviva</a>"
+        ],
+        "photo_reference": "AfLeUgOiPG0gu-mnjWWuJDYHuT5bjsx5DS7xvvoSrpG-GxvMLPnrMbuuVjCu03FQo8e8bfAPA-tXxed3brjcDGnsY2ucGhftkO7xVoNK8pSGvp29NHarGsNhH6n2zBVWk54KeEf2bvXyJIUe9fcd3qQ7-ehUyWN_yOu5ahl7eE2uAxLfucfg",
+        "width": 759
+      }
+    ],
+    "place_id": "ChIJWzafMHDI5zsRcnCihCzdjEQ",
+    "plus_code": {
+      "compound_code": "3VXQ+V6 Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3VXQ+V6"
+    },
+    "rating": 3.4,
+    "reference": "ChIJWzafMHDI5zsRcnCihCzdjEQ",
+    "scope": "GOOGLE",
+    "types": ["lodging", "point_of_interest", "establishment"],
+    "user_ratings_total": 131,
+    "vicinity": "11, Mumbai Janta Transport, 90 Feet Rd, Andheri East, Sathi D Souza Nagar, Sakinaka, Mumbai"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 19.0567687,
+        "lng": 72.8699302
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 19.0580970302915,
+          "lng": 72.87131573029149
+        },
+        "southwest": {
+          "lat": 19.0553990697085,
+          "lng": 72.86861776970848
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "icon_background_color": "#909CE1",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+    "name": "Hotel Golden Sagar",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 720,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/115115281532169080542\">Hotel Room booking</a>"
+        ],
+        "photo_reference": "AfLeUgPmZ1Y5MSiddAvtEBMoQPfaJrTQOUa6b12OUess2ulR4xJ2hgm2RycCo7PjHxw6c7dOVVzjrSNWS7vZrrq-RxYs6k9VZRkz9sASRRF46CSnvCBDQArsAFLqDdAoC78K7lknaJ47GHLIO14FAoyDojj0Ok0fhU_P_b_8IdaXy01_eAbo",
+        "width": 1485
+      }
+    ],
+    "place_id": "ChIJFR3daMHI5zsRNjoO8NcCwDI",
+    "plus_code": {
+      "compound_code": "3V49+PX Mumbai, Maharashtra, India",
+      "global_code": "7JFJ3V49+PX"
+    },
+    "rating": 3.5,
+    "reference": "ChIJFR3daMHI5zsRNjoO8NcCwDI",
+    "scope": "GOOGLE",
+    "types": ["lodging", "point_of_interest", "establishment"],
+    "user_ratings_total": 1088,
+    "vicinity": "Indira Nagar, In Between Kurla Garden & Maharashtra Kata, Lal Bahadur Shastri Marg, Kurla West, Mumbai"
+  }
+]
