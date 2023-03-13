@@ -643,6 +643,7 @@ const ResultPage = (props: Props) => {
                     </div>
                     <div className="flex flex-wrap gap-2 my-2">
                       {hotel?.types.map((type, index) => {
+                        if(index>6) return null;
                         return (
                           <span
                             key={index}
