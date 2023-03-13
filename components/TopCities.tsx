@@ -46,7 +46,7 @@ const TopCities = () => {
         {deals.map((deal, index) => {
           return (
             <CardSpacer offset={animationOffset[index]} key={index}>
-              <Card href="/" image={deal.image}>
+              <Card href="/" image={index}>
                 <h1 className="text-xl font-bold pt-2 pb-2 w-full text-center sm:text-2xl bg-[rgb(255,111,42,52%)] hover:bg-[rgb(255,111,42,80%)] transition-all duration-200">
                   {deal.name}
                 </h1>
