@@ -9,6 +9,7 @@ const getHotels = async (req: NextApiRequest, res: NextApiResponse) => {
   const response = await axios({
     url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${lon}&radius=20000&type=lodging&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
     method: "get",
+    mode : "no-cors"
   })
   if(response.status !== 200) {
     res.status(500).json({ message: "Error" });
