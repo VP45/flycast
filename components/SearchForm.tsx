@@ -155,8 +155,8 @@ const SearchForm = (props: Props) => {
               </li>
             </ul>
           </div>
-          <div className="w-full flex space-x-6">
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+          <div className="w-full flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <IoIosAirplane className="h-6 w-6" />
               <input
                 className="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
@@ -177,7 +177,7 @@ const SearchForm = (props: Props) => {
                 })}
               </datalist>
             </div>
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <BiCurrentLocation className="h-6 w-6" />
 
               <input
@@ -200,12 +200,12 @@ const SearchForm = (props: Props) => {
               </datalist>
             </div>
           </div>
-          <div className="w-full flex space-x-6">
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+          <div className="w-full flex space-x-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <BsFillPersonFill className="h-6 w-6" />
               <input
                 // className="appearance-none block w-full bg-gray-800 text-gray-200 border rounded py-3 px-4 mb-3 leading-tight"
-                className="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                className="appearance-none w-full bg text-gray-900 dark:text-white py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                 type="number"
                 step="1"
                 placeholder="Adults"
@@ -216,11 +216,11 @@ const SearchForm = (props: Props) => {
                 max={9}
               />
             </div>
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <FaChild className="h-6 w-6" />
               <input
                 // className="appearance-none block w-full bg-gray-800 text-gray-200 border rounded py-3 px-4 mb-3 leading-tight"
-                className="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                className="appearance-none w-full bg text-gray-900 dark:text-white py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                 type="number"
                 step="1"
                 placeholder="Children"
@@ -231,8 +231,8 @@ const SearchForm = (props: Props) => {
               />
             </div>
           </div>
-          <div className="w-full flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-6">
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+          <div className="w-full flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <BsCalendarDate />
               {isOneWay == 0 ? (
                 <Datepicker
@@ -257,7 +257,7 @@ const SearchForm = (props: Props) => {
                 />
               )}
             </div>
-            <div className="w-full flex items-center appearance-none bg-gray-800 text-gray-200 border border-gray-200 rounded py-3 px-4">
+            <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <MdAirlineSeatReclineExtra className="h-6 w-6" />
               <select
                 id="countries"
@@ -267,8 +267,8 @@ const SearchForm = (props: Props) => {
                 onChange={(e) => setClassType(e.target.value)}
                 required
               >
-                <option value="ECONOMY">Economy</option>
-                <option value="BUSINESS">Business</option>
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
               </select>
             </div>
           </div>
