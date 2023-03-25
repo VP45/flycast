@@ -159,7 +159,7 @@ const SearchForm = (props: Props) => {
             <div className="w-full flex items-center bg-gray-50 border-gray-300 text-gray-900 appearance-none dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-200 rounded py-3 px-4">
               <IoIosAirplane className="h-6 w-6" />
               <input
-                className="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                className="appearance-none w-full bg text-gray-900 dark:text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                 id="grid-first-name"
                 type="text"
                 placeholder="Mumbai"
@@ -181,7 +181,7 @@ const SearchForm = (props: Props) => {
               <BiCurrentLocation className="h-6 w-6" />
 
               <input
-                className="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                className="appearance-none w-full bg text-gray-900 dark:text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                 id="grid-last-name"
                 type="text"
                 placeholder="Kerela"
@@ -241,7 +241,7 @@ const SearchForm = (props: Props) => {
                   onChange={handleValueChange}
                   primaryColor={"orange"}
                   showShortcuts={true}
-                  inputClassName="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                  inputClassName="appearance-none w-full bg text-gray-900 dark:text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                   toggleClassName="hidden"
                   containerClassName="w-full"
                 />
@@ -251,7 +251,7 @@ const SearchForm = (props: Props) => {
                   onChange={handleValueChange}
                   primaryColor={"orange"}
                   showShortcuts={true}
-                  inputClassName="appearance-none w-full bg text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
+                  inputClassName="appearance-none w-full bg text-gray-900 dark:text-gray-200  py-2.5 px-4 leading-tight outline-none focus:outline-none border-none focus:border-none focus:ring-0 bg-transparent"
                   toggleClassName="hidden"
                   containerClassName="w-full"
                 />

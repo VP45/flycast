@@ -6,15 +6,9 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { Airport } from "../../../types/Airport";
 import AirportJson from "../../../assets/airports.json";
-// import Hotels from "../../../assets/Hotels.json";
-// import Tourism from "../../../assets/Tourism.json";
-import { HotelType } from "../../../types/Hotels";
-// import axios from "axios";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import parse from "html-react-parser";
-import { TouristPlace } from "../../../types/Tourism";
 import { Element } from "html-react-parser";
-import WeatherCarousel from "../../../components/WeatherCarousel";
 import FlightCard from "../../../components/FlightCard";
 import Flights from "../../../assets/Flights.json";
 import { IoIosAirplane } from "react-icons/io";
@@ -25,16 +19,14 @@ const ResultPage = (props: Props) => {
   const {
     source,
     dst,
-    departDate,
-    arrivalDate,
-    adults,
-    childrenn,
     classType,
-    date,
+    hotels,
+    setHotels,
+    topPlaces,
+    setTopPlaces,
+    setDstForMap
   } = useContext(AppContext);
 
-  const [hotels, setHotels] = useState<HotelType[]>([]);
-  const [tourPlaces, setTourPlaces] = useState<TouristPlace[]>([]);
   const [srcAirport, setSrcAirport] = useState<Airport>({
     id: 3572,
     name: "Trivandrum International Airport",
@@ -111,7 +103,7 @@ const ResultPage = (props: Props) => {
       .then((res) => res.json())
       .then((res) => {
         console.log("tourism", res.results);
-        setTourPlaces(res.results);
+        setTopPlaces(res.results);
       })
       .catch((err) => console.log(err));
   };
@@ -140,18 +132,18 @@ const ResultPage = (props: Props) => {
   }
 
   useEffect(() => {
-    if (source === "" || dst === "") {
-      window.location.href = "/";
-    }
+    // if (source === "" || dst === "") {
+    //   window.location.href = "/";
+    // }
     // if(date?.startDate === undefined || date?.endDate === undefined){
     //   window.location.href = "/"
     // }
-    if (adults === 0) {
-      window.location.href = "/";
-    }
-    if (classType === "") {
-      window.location.href = "/";
-    }
+    // if (adults === 0) {
+    //   window.location.href = "/";
+    // }
+    // if (classType === "") {
+    //   window.location.href = "/";
+    // }
     const srcIata = source.split(" ")[0];
     const dstIata = dst.split(" ")[0];
     // const srcDate = new Date(date?.startDate).toISOString().split("T")[0];
@@ -175,6 +167,12 @@ const ResultPage = (props: Props) => {
     }
     console.log("DstAirport", DstAirport);
     console.log("SrcAirport", SrcAirport);
+
+    // save dst airport in context api to use them in map :D
+    if(DstAirport){
+      setDstForMap(DstAirport);
+    }
+
     fetchHotels(DstAirport);
     fetchTouristPlaces(DstAirport);
     // fetchFlights()
@@ -200,12 +198,13 @@ const ResultPage = (props: Props) => {
       <div className="mt-4 mb-4 w-full flex flex-col items-center space-y-10">
         {" "}
         {/* prediction box */}
-        <div className="w-full  max-w-6xl">
+        <div className="w-full  max-w-6xl text-gray-900">
           <GaugeChart id="gauge-chart3"
             nrOfLevels={30}
             colors={["#ff1c30", "#1cff24"]}
             arcWidth={0.3}
             percent={0.73}
+            textColor={"#ff6f2a"}
           />
         </div>{" "}
         {/* flight cards */}
@@ -309,16 +308,16 @@ const ResultPage = (props: Props) => {
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-            {tourPlaces &&
-              Array.isArray(tourPlaces) &&
-              tourPlaces?.map((place, index) => {
+            {topPlaces &&
+              Array.isArray(topPlaces) &&
+              topPlaces?.map((place, index) => {
                 if (!place?.photos) {
                   return null;
                 }
                 return (
                   <div
                     key={index}
-                    className="max-w-sm md:max-w-md cursor-pointer rounded-xl bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
+                    className="max-w-sm md:max-w-md cursor-pointer rounded-xl dark:bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
                   >
                     <div className="relative flex items-end overflow-hidden rounded-xl">
                       <img
@@ -403,18 +402,19 @@ const ResultPage = (props: Props) => {
                                   domNode.tagName === "a"
                                 ) {
                                   return (
-                                    <a
-                                      target="_blank"
-                                      href={domNode?.attribs.href}
+                                    <Link
+                                      // target="_blank"
+                                      // href={domNode?.attribs.href}
+                                      href="/search/map"
                                     >
                                       View on map
-                                    </a>
+                                    </Link>
                                   );
                                 } else {
                                   return (
-                                    <a target="_blank" href="#">
+                                    <Link href="/search/map">
                                       View on map
-                                    </a>
+                                    </Link>
                                   );
                                 }
                               },
@@ -547,18 +547,19 @@ const ResultPage = (props: Props) => {
                                   domNode.tagName === "a"
                                 ) {
                                   return (
-                                    <a
-                                      target="_blank"
-                                      href={domNode?.attribs.href}
+                                    <Link
+                                      // target="_blank"
+                                      // href={domNode?.attribs.href}
+                                      href="/search/map"
                                     >
                                       View on map
-                                    </a>
+                                    </Link>
                                   );
                                 } else {
                                   return (
-                                    <a target="_blank" href="#">
+                                    <Link href="/search/map">
                                       View on map
-                                    </a>
+                                    </Link>
                                   );
                                 }
                               },

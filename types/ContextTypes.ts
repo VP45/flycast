@@ -1,5 +1,7 @@
 import { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import { Airports } from "./Airport";
+import { Airport, Airports } from "./Airport";
+import { HotelType } from "./Hotels";
+import { TouristPlace } from "./Tourism";
 
 export type SetStateTypeForSrings = React.Dispatch<React.SetStateAction<string>>;
 export type ContextType = {
@@ -21,4 +23,10 @@ export type ContextType = {
   setClassType: SetStateTypeForSrings;
   date: DateValueType;
   setDate: React.Dispatch<React.SetStateAction<DateValueType>>;
+  hotels: HotelType[];
+  setHotels: React.Dispatch<React.SetStateAction<HotelType[]>>;
+  topPlaces: TouristPlace[];
+  setTopPlaces: React.Dispatch<React.SetStateAction<TouristPlace[]>>;
+  dstForMap: Airport;
+  setDstForMap: React.Dispatch<React.SetStateAction<Airport>>;
 };
