@@ -10,7 +10,7 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import parse from "html-react-parser";
 import { Element } from "html-react-parser";
 import FlightCard from "../../../components/FlightCard";
-import Flights from "../../../assets/Flights.json";
+import Flights from "../../../assets/flights.json";
 import { IoIosAirplane } from "react-icons/io";
 import GaugeChart from 'react-gauge-chart'
 type Props = {};
