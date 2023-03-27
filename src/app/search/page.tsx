@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { IoChevronBackSharp } from "react-icons/io5";
+import { IoArrowUndo, IoChevronBackCircle, IoChevronBackOutline, IoChevronBackSharp } from "react-icons/io5";
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { Airport } from "../../../types/Airport";
@@ -13,6 +13,7 @@ import FlightCard from "../../../components/FlightCard";
 import Flights from "../../../assets/flights.json";
 import { IoIosAirplane } from "react-icons/io";
 import GaugeChart from 'react-gauge-chart'
+import { useRouter } from "next/navigation";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -24,7 +25,7 @@ const ResultPage = (props: Props) => {
     setHotels,
     topPlaces,
     setTopPlaces,
-    setDstForMap
+    // setDstForMap
   } = useContext(AppContext);
 
   const [srcAirport, setSrcAirport] = useState<Airport>({
@@ -70,6 +71,8 @@ const ResultPage = (props: Props) => {
     countryId: 102,
   });
 
+  const router = useRouter();
+
   const fetchHotels = async (DstAirport: Airport | undefined) => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/hotel`, {
       method: "POST",
@@ -85,6 +88,7 @@ const ResultPage = (props: Props) => {
       .then((res) => {
         console.log("hotels", res.results);
         setHotels(res.results);
+        localStorage.setItem("hotels", JSON.stringify(res.results));
       })
       .catch((err) => console.log(err));
   };
@@ -104,6 +108,7 @@ const ResultPage = (props: Props) => {
       .then((res) => {
         console.log("tourism", res.results);
         setTopPlaces(res.results);
+        localStorage.setItem("topPlaces", JSON.stringify(res.results));
       })
       .catch((err) => console.log(err));
   };
@@ -170,7 +175,8 @@ const ResultPage = (props: Props) => {
 
     // save dst airport in context api to use them in map :D
     if(DstAirport){
-      setDstForMap(DstAirport);
+      // setDstForMap(DstAirport);
+      localStorage.setItem("dstForMap", JSON.stringify(DstAirport));
     }
 
     fetchHotels(DstAirport);
@@ -179,7 +185,7 @@ const ResultPage = (props: Props) => {
     // once flights are fetch, take the one with minimum price and query model using its attribute for prediction!!!!
 
     // if(Flights.length>0){
-    predictFlightPrice(SrcAirport, DstAirport, classType);
+    // predictFlightPrice(SrcAirport, DstAirport, classType);
     // }
   }, []);
 
@@ -189,7 +195,7 @@ const ResultPage = (props: Props) => {
         {" "}
         {/* Back to Home */}
         <Link href="/" className="flex flex-row items-center space-x-2">
-          <IoChevronBackSharp className="text-[#ff6f2a] hover:text-[#d8581d] w-6 h-6" />
+          <IoArrowUndo className="text-[#ff6f2a] hover:text-[#d8581d] w-6 h-6" />
           <p className="text-[#ff6f2a] hover:text-[#d8581d] text-lg">
             Back to Home
           </p>
@@ -402,17 +408,21 @@ const ResultPage = (props: Props) => {
                                   domNode.tagName === "a"
                                 ) {
                                   return (
-                                    <Link
+                                    <button
                                       // target="_blank"
                                       // href={domNode?.attribs.href}
-                                      href="/search/map"
+                                      // href="/search/map/top-places"
+                                      onClick={() => {
+                                        localStorage.setItem("clickedTopPlace", JSON.stringify(place));
+                                        router.push("/search/map/top-places");
+                                      }}
                                     >
                                       View on map
-                                    </Link>
+                                    </button>
                                   );
                                 } else {
                                   return (
-                                    <Link href="/search/map">
+                                    <Link href="/search/map/top-places">
                                       View on map
                                     </Link>
                                   );
@@ -547,17 +557,21 @@ const ResultPage = (props: Props) => {
                                   domNode.tagName === "a"
                                 ) {
                                   return (
-                                    <Link
+                                    <button
                                       // target="_blank"
                                       // href={domNode?.attribs.href}
-                                      href="/search/map"
+                                      // href="/search/map/hotels"
+                                      onClick={() => {
+                                        localStorage.setItem("clickedHotel", JSON.stringify(hotel));
+                                        router.push("/search/map/hotels");
+                                      }}
                                     >
                                       View on map
-                                    </Link>
+                                    </button>
                                   );
                                 } else {
                                   return (
-                                    <Link href="/search/map">
+                                    <Link href="/search/map/hotels">
                                       View on map
                                     </Link>
                                   );

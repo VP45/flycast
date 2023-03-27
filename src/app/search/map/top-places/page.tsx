@@ -4,14 +4,19 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
-import { IoChevronBackSharp } from 'react-icons/io5';
-import { AppContext } from "../../../../context/AppContext";
+import { IoArrowUndo } from 'react-icons/io5';
+import { AppContext } from "../../../../../context/AppContext";
+import { Airport } from '../../../../../types/Airport';
+import { TouristPlace } from '../../../../../types/Tourism';
 
 export default function Home() {
     const [Map, setMap] = useState<mapboxgl.Map>();
     const [pageIsMounted, setPageIsMounted] = useState(false);
 
-    const { dstForMap, hotels, topPlaces } = useContext(AppContext);
+    // const { dstForMap, topPlaces } = useContext(AppContext);
+    const [dstForMap, setDstForMap] = useState<Airport>();
+    const [clickedTopPlace, setClickedTopPlace] = useState<TouristPlace>();
+    const [topPlaces, setTopPlaces] = useState<TouristPlace[]>([]);
 
     // const stores = {
     //     'type': 'FeatureCollection',
@@ -218,7 +223,7 @@ export default function Home() {
     //     ]
     // };
 
-    const [hotelsGeoJson, setHotelsGeoJson] = useState<any>(null);
+    const [topPlacesGeoJson, setTopPlacesGeoJson] = useState<any>(null);
 
     mapboxgl.accessToken = 'pk.eyJ1IjoibG9ncmFzc285NiIsImEiOiJjanUzZ2cxNW0wMmtoM3pvMmtzb2w4ZGJuIn0.zqK9cllpLJugxixeSqOKGQ';
 
@@ -233,61 +238,108 @@ export default function Home() {
 
 
     useEffect(() => {
-        setPageIsMounted(true)
-        console.log("hotels", hotels)
-        console.log("TopPlaces", topPlaces)
-        const tempHotelsGeoJson = {
-            'type': 'FeatureCollection',
-            'features': hotels.map((hotel) => {
-                return {
+        if (clickedTopPlace) {
+            setTimeout(() => {
+                const clickedPlace = {
                     'type': 'Feature',
                     'geometry': {
                         'type': 'Point',
-                        'coordinates': [hotel?.geometry?.location?.lng, hotel?.geometry?.location?.lat]
+                        'coordinates': [clickedTopPlace.geometry.location.lng, clickedTopPlace.geometry.location.lat]
                     },
                     'properties': {
-                        "photos": hotel.photos,
-                        "place_id": hotel.place_id,
-                        "icon": hotel.icon,
-                        "name": hotel.name,
-                        "icon_background_color": hotel.icon_background_color,
-                        "icon_mask_base_uri": hotel.icon_mask_base_uri,
-                        "rating": hotel.rating,
-                        "user_ratings_total": hotel.user_ratings_total,
-                        "vicinity": hotel.vicinity,
-                        "reference": hotel.reference
+                        "photos": clickedTopPlace.photos,
+                        "place_id": clickedTopPlace.place_id,
+                        "icon": clickedTopPlace.icon,
+                        "name": clickedTopPlace.name,
+                        "icon_background_color": clickedTopPlace.icon_background_color,
+                        "icon_mask_base_uri": clickedTopPlace.icon_mask_base_uri,
+                        "rating": clickedTopPlace.rating,
+                        "user_ratings_total": clickedTopPlace.user_ratings_total,
+                        "vicinity": clickedTopPlace.vicinity,
+                        "reference": clickedTopPlace.reference
                     }
                 }
-            })
+                createPopUp(clickedPlace)
+                flyToStore(clickedPlace)
+            }, 200)
         }
+    }, [clickedTopPlace, setClickedTopPlace])
 
-        setHotelsGeoJson(tempHotelsGeoJson)
-        console.log("tempHotelsGeoJson", tempHotelsGeoJson)
-        console.log("dstForMap", dstForMap)
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v10',
-            // center: [78.9629, 20.5937]
-            center: [dstForMap?.lon, dstForMap?.lat],
-            zoom: 10,
-            // scrollZoom: false
-        });
 
-        // Add zoom and rotation controls to the map.
-        map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-        setMap(map);
+    useEffect(() => {
+        if (topPlaces && topPlaces.length > 0) {
+            const tempTopPlacesGeoJson = {
+                'type': 'FeatureCollection',
+                'features': topPlaces?.map((topPlace) => {
+                    return {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [topPlace?.geometry?.location?.lng, topPlace?.geometry?.location?.lat]
+                        },
+                        'properties': {
+                            "photos": topPlace.photos,
+                            "place_id": topPlace.place_id,
+                            "icon": topPlace.icon,
+                            "name": topPlace.name,
+                            "icon_background_color": topPlace.icon_background_color,
+                            "icon_mask_base_uri": topPlace.icon_mask_base_uri,
+                            "rating": topPlace.rating,
+                            "user_ratings_total": topPlace.user_ratings_total,
+                            "vicinity": topPlace.vicinity,
+                            "reference": topPlace.reference
+                        }
+                    }
+                })
+            }
 
+            setTopPlacesGeoJson(tempTopPlacesGeoJson);
+        }
+    }, [topPlaces, setTopPlaces])
+
+    useEffect(() => {
+        // initialising map....
+        if (dstForMap) {
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/light-v10',
+                // center: [78.9629, 20.5937]
+                center: dstForMap
+                    ? [dstForMap?.lon, dstForMap?.lat]
+                    : (topPlaces?.length > 0
+                        ? [topPlaces[0]?.geometry?.location?.lng, topPlaces[0]?.geometry?.location?.lat]
+                        : (clickedTopPlace
+                            ? [clickedTopPlace?.geometry?.location?.lng, clickedTopPlace?.geometry?.location?.lat]
+                            : [77.2090, 28.6139])),
+                zoom: 10.5,
+                // scrollZoom: false
+            });
+
+            // Add zoom and rotation controls to the map.
+            map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+            setMap(map);
+        }
+    }, [dstForMap]);
+
+    useEffect(() => {
+        setTopPlaces(localStorage.getItem('topPlaces') ? JSON.parse(localStorage.getItem('topPlaces') || '') : null)
+        setDstForMap(localStorage.getItem('dstForMap') ? JSON.parse(localStorage.getItem('dstForMap') || '') : null)
+        // render page after all processes are done :)
+        setPageIsMounted(true);
     }, []);
 
     useEffect(() => {
-        if (pageIsMounted && hotelsGeoJson) {
+        if (pageIsMounted && topPlacesGeoJson) {
             Map?.on('load', () => {
                 Map?.addSource('places', {
                     'type': 'geojson',
-                    'data': hotelsGeoJson
+                    'data': topPlacesGeoJson
                 });
-                buildLocationList(hotelsGeoJson);
+                buildLocationList(topPlacesGeoJson);
                 addMarkers();
+
+                // fly to clicked topPlace....
+                setClickedTopPlace(localStorage.getItem('clickedTopPlace') ? JSON.parse(localStorage.getItem('clickedTopPlace') || '') : null)
             });
         }
 
@@ -299,13 +351,13 @@ export default function Home() {
      **/
     function addMarkers() {
         /* For each feature in the GeoJSON object above: */
-        for (const marker of hotelsGeoJson.features) {
+        for (const marker of topPlacesGeoJson.features) {
             /* Create a div element for the marker. */
             const el = document.createElement('div');
             /* Assign a unique `id` to the marker. */
             el.id = `marker-${marker?.properties?.place_id}`;
             /* Assign the `marker` class to each marker for styling. */
-            el.className = 'marker';
+            el.className = 'marker marker--topPlaces';
 
             /**
              * Create a marker using the div element
@@ -343,8 +395,8 @@ export default function Home() {
     /**
      * Add a listing for each store to the sidebar.
      **/
-    function buildLocationList(hotelss: any) {
-        for (const store of hotelss?.features) {
+    function buildLocationList(topPlacess: any) {
+        for (const store of topPlacess?.features) {
             /* Add a new listing section to the sidebar. */
             const listings = document.getElementById('listings');
             if (listings) {
@@ -377,7 +429,7 @@ export default function Home() {
                  * 4. Highlight listing in sidebar (and remove highlight for all other listings)
                  **/
                 link.addEventListener('click', function () {
-                    for (const feature of hotelss.features) {
+                    for (const feature of topPlacess.features) {
                         if (this.id === `link-${feature?.properties?.place_id}`) {
                             flyToStore(feature);
                             createPopUp(feature);
@@ -424,9 +476,9 @@ export default function Home() {
         <div className='w-screen relative h-fit'>
             <div className='sidebar'>
                 <div className='heading flex flex-row space-x-2 justify-start items-center'>
-                    <IoChevronBackSharp 
+                    <IoArrowUndo
                         className="text-white hover:text-gray-200 w-6 h-6"
-                        onClick={() => history.back()} 
+                        onClick={() => history.back()}
                     />
                     <h1>Top Places</h1>
                 </div>

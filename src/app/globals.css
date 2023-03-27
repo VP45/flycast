@@ -50,7 +50,7 @@ html {
 .sidebar {
   position: absolute;
   width: 33.3333%;
-  height: 100%;
+  height: 100vh;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -151,7 +151,15 @@ a:hover {
   cursor: pointer;
   height: 56px;
   width: 56px;
-  background-image: url(https://docs.mapbox.com/help/demos/building-a-store-locator/marker.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.marker--topPlaces {
+  background-image: url(../../assets/top-places-marker.png);
+}
+.marker--hotels {
+  background-image: url(../../assets/hotels-marker.png);
 }
 
 /* Marker tweaks */

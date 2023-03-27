@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
 
   const pathname = usePathname();
-  const showLayout = pathname === '/search/map' ? false : true;
+  const showLayout = pathname?.includes('/search/map') ? false : true;
   return (
     <html lang="en">
       <body className='w-screen max-w-screen-2xl mx-auto flex justify-center items-center flex-col'>
