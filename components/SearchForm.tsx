@@ -60,9 +60,11 @@ const SearchForm = (props: Props) => {
   // });
 
   // Hadlers for form inputs .......
+  
   const handleValueChange = (newValue: DateValueType) => {
     console.log("newValue:", newValue);
     setDate(newValue);
+    // console.log("date:", date);
   };
 
   const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +90,7 @@ const SearchForm = (props: Props) => {
       alert("Please select destination airport");
       return;
     }
-    if (departDate?.startDate === "") {
+    if (date?.startDate === "") {
       alert("Please select departure date");
       return;
     }
