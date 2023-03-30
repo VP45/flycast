@@ -64,7 +64,7 @@ const FlightCard = ({
           </div>
         </div>
         <div className="mt-2 flex justify-start bg-white dark:bg-gray-700 p-2">
-          <div className="flex mx-2 ml-6 h8 px-2 flex-row items-baseline rounded-full bg-gray-100 dark:bg-gray-900 p-1">
+          <div className="flex items-center mx-2 ml-6 h8 px-2 flex-row items-baseline rounded-full bg-gray-100 dark:bg-gray-900 p-1">
             <IoIosAirplane className="text-gray-500" />
             <p className="font-normal text-sm ml-1 text-gray-500">
               {classType}
