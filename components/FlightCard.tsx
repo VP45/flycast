@@ -26,7 +26,7 @@ const FlightCard = ({
   function formatTime(date: String) {
     // function to format date
     const tempDate = new Date(date as string);
-    const newTime = tempDate.toTimeString();
+    const newTime = tempDate.toLocaleTimeString();
     return newTime;
   }
   return (
@@ -129,7 +129,7 @@ const FlightCard = ({
               <IoIosAirplane className="w-12 h-10 p-2 mx-2 self-center my-btn-color rounded-full fill-current text-white" />
               <div className="text-sm mx-2 flex flex-col">
                 <p className="">Standard Ticket</p>
-                <p className="font-bold">{flight?.price?.total}</p>
+                <p className="font-bold">Rs. {flight?.price?.total}</p>
                 <p className="text-xs text-gray-500">Price per adult</p>
               </div>
             </div>
