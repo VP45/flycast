@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 import { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import { Dictionaries, FlightLargeType, FlightType } from "../../../types/Flight";
 import { MdOutlinePlace } from "react-icons/md";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import TripPlanner from "../../../components/TripPlanner";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -85,6 +87,10 @@ const ResultPage = (props: Props) => {
   const [startCard, setStartCard] = useState(0);
   const [endCard, setEndCard] = useState(5);
   const [tab, setTab] = useState(0);
+  const [viewMorePlaces, setViewMorePlaces] = useState(false);
+  const [placesCardEnd, setPlacesCardEnd] = useState(6);
+  const [viewMoreHotels, setViewMoreHotels] = useState(false);
+  const [hotelsCardEnd, setHotelsCardEnd] = useState(6);
   const router = useRouter();
 
   const fetchHotels = async (DstAirport: Airport | undefined) => {
@@ -422,7 +428,7 @@ const ResultPage = (props: Props) => {
                     </button>
                   </li>
                   {
-                    Array.from(Array(Math.ceil(Flights?.data.length / 5)).keys()).slice(0,5).map((page, index) => {
+                    Array.from(Array(Math.ceil(Flights?.data.length / 5)).keys()).slice(0, 5).map((page, index) => {
                       return (
                         <li key={index}>
                           <button
@@ -444,15 +450,15 @@ const ResultPage = (props: Props) => {
                   {
                     Flights?.data.length > 5 && (
                       <li>
-                          <button
-                            className={
-                              startCard >= 25
-                                ? "z-10 px-3 py-2 leading-tight text-[#ff6f2a] border border-[#ff6e2a74] bg-[#ff6e2a2f] hover:bg-[#ff6e2ab8] hover:text-[#c65724] dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                                : "block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            }>
-                            . . .
-                          </button>
-                        </li>
+                        <button
+                          className={
+                            startCard >= 25
+                              ? "z-10 px-3 py-2 leading-tight text-[#ff6f2a] border border-[#ff6e2a74] bg-[#ff6e2a2f] hover:bg-[#ff6e2ab8] hover:text-[#c65724] dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                              : "block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                          }>
+                          . . .
+                        </button>
+                      </li>
                     )
                   }
                   <li>
@@ -498,7 +504,7 @@ const ResultPage = (props: Props) => {
               <button
                 onClick={() => {
                   setTab(1);
-                }} 
+                }}
                 className={
                   tab === 1
                     ? "inline-flex p-4 text-[#ff6f2a] border-b-2 border-[#ff6f2a] rounded-t-lg active group"
@@ -527,9 +533,11 @@ const ResultPage = (props: Props) => {
                 </h1>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-                {topPlaces &&
+                {
+                  topPlaces &&
                   Array.isArray(topPlaces) &&
-                  topPlaces?.map((place, index) => {
+                  // show only 6 places initially          
+                  topPlaces.slice(0, placesCardEnd).map((place, index) => {
                     if (!place?.photos) {
                       return null;
                     }
@@ -647,7 +655,24 @@ const ResultPage = (props: Props) => {
                         </div>
                       </div>
                     );
-                  })}
+                  })
+                }
+              </div>
+              <div className="flex items-center justify-end pr-6 space-x-2"              >
+                <p className="text-lg text-[#ff6f2a] cursor-pointer"
+                  onClick={() => {
+                    setViewMorePlaces(!viewMorePlaces);
+                    setPlacesCardEnd(viewMorePlaces ? 6 : topPlaces?.length)
+                  }}>
+                  View {viewMorePlaces ? "less" : "more"}{" "}
+                </p>
+                {
+                  viewMorePlaces ? (
+                    <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
+                  ) : (
+                    <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
+                  )
+                }
               </div>
             </div>
           )
@@ -667,7 +692,8 @@ const ResultPage = (props: Props) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                 {hotels &&
                   Array.isArray(hotels) &&
-                  hotels?.map((hotel, index) => {
+                  // show only 6 hotels initially
+                  hotels.slice(0, hotelsCardEnd)?.map((hotel, index) => {
                     if (!hotel?.photos) {
                       return null;
                     }
@@ -802,9 +828,30 @@ const ResultPage = (props: Props) => {
                     );
                   })}
               </div>
+              <div className="flex items-center justify-end pr-6 space-x-2"              >
+                <p className="text-lg text-[#ff6f2a] cursor-pointer"
+                  onClick={() => {
+                    setViewMoreHotels(!viewMoreHotels);
+                    setHotelsCardEnd(viewMoreHotels ? 6 : hotels?.length)
+                  }}>
+                  View {viewMoreHotels ? "less" : "more"}{" "}
+                </p>
+                {
+                  viewMoreHotels ? (
+                    <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
+                  ) : (
+                    <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
+                  )
+                }
+              </div>
             </div>
           )
         }
+
+        {/* Trip Planner */}
+        <div className="w-full flex flex-col space-y-4">
+          <TripPlanner/>
+        </div>
         {/* Weather forecast */}
         {/* <div className="w-full flex flex-col space-y-4">
           <div>

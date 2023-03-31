@@ -9,7 +9,7 @@ import Delhi from "../assets/destinations/delhi.jpg";
 import Dehradun from "../assets/destinations/dehradun2.jpg";
 import Hyderabad from "../assets/destinations/hyderabad.jpg";
 
-const imgDict = [Mumbai.src, Delhi.src, Dehradun.src, Hyderabad.src, Bangalore.src];
+const imgDict = [Mumbai.src, Delhi.src, Dehradun.src, Bangalore.src, Hyderabad.src];
 export const CardsContainer = styled.div`
   margin: 50px auto;
   width: 100%;
