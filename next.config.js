@@ -5,6 +5,7 @@ const nextConfig = {
     esmExternals: "loose"
   },
   images: { domains: ['flowbite.s3.amazonaws.com'] },
+  reactStrictMode: false
 }
 
 module.exports = nextConfig

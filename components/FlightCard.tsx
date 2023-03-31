@@ -26,7 +26,7 @@ const FlightCard = ({
   function formatTime(date: String) {
     // function to format date
     const tempDate = new Date(date as string);
-    const newTime = tempDate.toTimeString();
+    const newTime = tempDate.toLocaleTimeString();
     return newTime;
   }
   return (
@@ -64,7 +64,7 @@ const FlightCard = ({
           </div>
         </div>
         <div className="mt-2 flex justify-start bg-white dark:bg-gray-700 p-2">
-          <div className="flex mx-2 ml-6 h8 px-2 flex-row items-baseline rounded-full bg-gray-100 dark:bg-gray-900 p-1">
+          <div className="flex items-center mx-2 ml-6 h8 px-2 flex-row items-baseline rounded-full bg-gray-100 dark:bg-gray-900 p-1">
             <IoIosAirplane className="text-gray-500" />
             <p className="font-normal text-sm ml-1 text-gray-500">
               {classType}
@@ -129,7 +129,7 @@ const FlightCard = ({
               <IoIosAirplane className="w-12 h-10 p-2 mx-2 self-center my-btn-color rounded-full fill-current text-white" />
               <div className="text-sm mx-2 flex flex-col">
                 <p className="">Standard Ticket</p>
-                <p className="font-bold">{flight?.price?.total}</p>
+                <p className="font-bold">Rs. {flight?.price?.total}</p>
                 <p className="text-xs text-gray-500">Price per adult</p>
               </div>
             </div>
