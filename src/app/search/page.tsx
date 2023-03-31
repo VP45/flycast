@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { Airport } from "../../../types/Airport";
 import AirportJson from "../../../assets/airports.json";
-import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaBed, FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import parse from "html-react-parser";
 import { Element } from "html-react-parser";
 import FlightCard from "../../../components/FlightCard";
@@ -16,6 +16,7 @@ import GaugeChart from 'react-gauge-chart'
 import { useRouter } from "next/navigation";
 import { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import { Dictionaries, FlightLargeType, FlightType } from "../../../types/Flight";
+import { MdOutlinePlace } from "react-icons/md";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -81,8 +82,9 @@ const ResultPage = (props: Props) => {
   const [flightPred, setFlightPred] = useState<FlightType | null>(null);
   const [predictionPercentage, setPredictionPercentage] = useState(0);
   const [willPriceDrop, setWillPriceDrop] = useState(false);
-
-
+  const [startCard, setStartCard] = useState(0);
+  const [endCard, setEndCard] = useState(5);
+  const [tab, setTab] = useState(0);
   const router = useRouter();
 
   const fetchHotels = async (DstAirport: Airport | undefined) => {
@@ -278,7 +280,7 @@ const ResultPage = (props: Props) => {
 
     fetchHotels(DstAirport);
     fetchTouristPlaces(DstAirport);
-    fetchFlights(SrcAirport, DstAirport, classType, date, adults, childrenn)
+    // fetchFlights(SrcAirport, DstAirport, classType, date, adults, childrenn)
   }, []);
 
   useEffect(() => {
@@ -290,7 +292,7 @@ const ResultPage = (props: Props) => {
           const flightForPrediction = flights.data.find((flight: FlightType) => allowedAirlines.includes(flight.validatingAirlineCodes[0]));
           if (flightForPrediction) {
             setFlightPred(flightForPrediction)
-            predictFlightPrice(flightForPrediction, flights.dictionaries, classType);
+            // predictFlightPrice(flightForPrediction, flights.dictionaries, classType);
           } else {
             console.log("no flight found for prediction");
           }
@@ -346,6 +348,7 @@ const ResultPage = (props: Props) => {
                   flights?.data &&
                   Array.isArray(flights?.data) && flightPred && (
                     <FlightCard
+                      timepass={0}
                       flight={flightPred}
                       classType={classType}
                       dstAirport={dstAirport}
@@ -360,324 +363,448 @@ const ResultPage = (props: Props) => {
         {/* flight cards */}
         <div className="w-full max-w-6xl flex flex-col space-y-6 p-2 md:p-0">
           {
-            flights?.data &&
-              Array.isArray(flights?.data) &&
-              flights?.data.length > 10
+            Flights?.data &&
+              Array.isArray(Flights?.data) &&
+              Flights?.data.length > 5
               ?
               (
-                flights?.data.slice(0, 10).map((flight: FlightType, index) => {
+                // apply pagination if flights are more than 5 :D
+
+                Flights?.data.slice(startCard, endCard).map((flight: FlightType, index) => {
                   return (<FlightCard
+                    timepass={startCard + index}
                     key={index}
                     flight={flight}
                     classType={classType}
                     dstAirport={dstAirport}
                     srcAirport={srcAirport}
-                    dictionaries={flights?.dictionaries}
+                    dictionaries={Flights?.dictionaries}
                   />)
                 })
               )
               :
               (
-                flights?.data?.map((flight: FlightType, index) => {
+                Flights?.data?.map((flight: FlightType, index) => {
                   return (
                     <FlightCard
+                      timepass={index}
                       key={index}
                       flight={flight}
                       classType={classType}
                       dstAirport={dstAirport}
                       srcAirport={srcAirport}
-                      dictionaries={flights?.dictionaries}
+                      dictionaries={Flights?.dictionaries}
                     />
                   );
                 })
               )
           }
+        </div>
+        {
+          Flights?.data &&
+          Array.isArray(Flights?.data) &&
+          Flights?.data.length > 5
+          && (
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul className="inline-flex items-center -space-x-px">
+                  <li>
+                    <button
+                      onClick={() => {
+                        if (startCard > 0) {
+                          setStartCard(startCard - 5);
+                          setEndCard(endCard - 5);
+                        }
+                      }}
+                      className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                      <span className="sr-only">Previous</span>
+                      <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </button>
+                  </li>
+                  {
+                    Array.from(Array(Math.ceil(Flights?.data.length / 5)).keys()).slice(0,5).map((page, index) => {
+                      return (
+                        <li key={index}>
+                          <button
+                            onClick={() => {
+                              setStartCard(page * 5);
+                              setEndCard((page * 5) + 5);
+                            }}
+                            className={
+                              startCard === page * 5
+                                ? "z-10 px-3 py-2 leading-tight text-[#ff6f2a] border border-[#ff6e2a74] bg-[#ff6e2a2f] hover:bg-[#ff6e2ab8] hover:text-[#c65724] dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                                : "block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            }>
+                            {page + 1}
+                          </button>
+                        </li>
+                      )
+                    })
+                  }
+                  {
+                    Flights?.data.length > 5 && (
+                      <li>
+                          <button
+                            className={
+                              startCard >= 25
+                                ? "z-10 px-3 py-2 leading-tight text-[#ff6f2a] border border-[#ff6e2a74] bg-[#ff6e2a2f] hover:bg-[#ff6e2ab8] hover:text-[#c65724] dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                                : "block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            }>
+                            . . .
+                          </button>
+                        </li>
+                    )
+                  }
+                  <li>
+                    <button
+                      onClick={() => {
+                        if (endCard < Flights?.data.length) {
+                          setStartCard(startCard + 5);
+                          setEndCard(endCard + 5);
+                        }
+                      }}
+                      className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                      <span className="sr-only">Next</span>
+                      <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )
+        }
 
+        {/* Tabs */}
+        <div className="border-b border-gray-200 dark:border-gray-700">
+          <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+            <li className="mr-2">
+              <button
+                onClick={() => {
+                  setTab(0);
+                }}
+                className={
+                  tab === 0
+                    ? "inline-flex p-4 text-[#ff6f2a] border-b-2 border-[#ff6f2a] rounded-t-lg active group"
+                    : "inline-flex p-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-700 group"
+                }>
+                <MdOutlinePlace className={
+                  tab === 0
+                    ? "w-5 h-5 mr-2 text-[#ff6f2a]"
+                    : "w-5 h-5 mr-2 text-gray-500 dark:text-gray-400"
+                } />Tourism Place
+              </button>
+            </li>
+            <li className="mr-2">
+              <button
+                onClick={() => {
+                  setTab(1);
+                }} 
+                className={
+                  tab === 1
+                    ? "inline-flex p-4 text-[#ff6f2a] border-b-2 border-[#ff6f2a] rounded-t-lg active group"
+                    : "inline-flex p-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-700 group"
+                } aria-current="page">
+                <FaBed className={
+                  tab === 1
+                    ? "w-5 h-5 mr-2 text-[#ff6f2a]"
+                    : "w-5 h-5 mr-2 text-gray-500 dark:text-gray-400"
+                } />Hotels
+              </button>
+            </li>
+          </ul>
         </div>
         {/* Top places to visit */}
-        <div className="">
-          <div>
-            <h1 className="w-full mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
-              Top{" "}
-              <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
-                Places
-              </span>{" "}
-              to visit at Destination City
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-            {topPlaces &&
-              Array.isArray(topPlaces) &&
-              topPlaces?.map((place, index) => {
-                if (!place?.photos) {
-                  return null;
-                }
-                return (
-                  <div
-                    key={index}
-                    className="max-w-sm md:max-w-md cursor-pointer rounded-xl dark:bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
-                  >
-                    <div className="relative flex items-end overflow-hidden rounded-xl">
-                      <img
-                        className="rounded-t-lg w-full h-[39vh] sm:h-[20vh] lg:h-[39vh] min-h-[250px] object-cover object-center"
-                        src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                        alt="tourist places"
-                      />
+        {
+          tab === 0 && (
+            <div className="">
+              <div>
+                <h1 className="w-full ml-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
+                  Top{" "}
+                  <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
+                    Places
+                  </span>{" "}
+                  to visit at Destination City
+                </h1>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                {topPlaces &&
+                  Array.isArray(topPlaces) &&
+                  topPlaces?.map((place, index) => {
+                    if (!place?.photos) {
+                      return null;
+                    }
+                    return (
+                      <div
+                        key={index}
+                        className="max-w-sm md:max-w-md cursor-pointer rounded-xl dark:bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
+                      >
+                        <div className="relative flex items-end overflow-hidden rounded-xl">
+                          <img
+                            className="rounded-t-lg w-full h-[39vh] sm:h-[20vh] lg:h-[39vh] min-h-[250px] object-cover object-center"
+                            src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+                            alt="tourist places"
+                          />
 
-                      <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 text-yellow-400"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-
-                        <span className="ml-1 text-sm text-slate-400">
-                          {place?.rating || 0}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-1 p-2">
-                      <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        {place.name}
-                      </h2>
-                      <p className="mt-1 text-sm text-slate-400">
-                        {place.vicinity}
-                      </p>
-                      <div className="flex flex-wrap gap-2 my-2">
-                        {place?.types.map((type, index) => {
-                          if (index > 6) return null;
-                          return (
-                            <span
-                              key={index}
-                              className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-md dark:bg-blue-200 dark:text-blue-800"
+                          <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5 text-yellow-400"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
                             >
-                              {type
-                                .split("_")
-                                .map((t) => {
-                                  return t.charAt(0).toUpperCase() + t.slice(1);
-                                })
-                                .join(" ")}
-                            </span>
-                          );
-                        })}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        {place?.user_ratings_total ? (
-                          <div>
-                            <p>Rated by</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              <span className="text-lg font-bold text-orange-500">
-                                {place?.user_ratings_total}
-                              </span>{" "}
-                              cutomers
-                            </p>
-                          </div>
-                        ) : (
-                          <div>
-                            <p>Rated by</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              <span className="text-lg font-bold text-orange-500">
-                                0
-                              </span>{" "}
-                              cutomers
-                            </p>
-                          </div>
-                        )}
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
 
-                        <div className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white ml-auto">
-                          {place?.photos &&
-                            place?.photos[0]?.html_attributions[0] &&
-                            parse(place?.photos[0]?.html_attributions[0], {
-                              replace: (domNode) => {
-                                // console.log(domNode.);
-                                if (
-                                  domNode instanceof Element &&
-                                  domNode?.attribs &&
-                                  domNode.tagName === "a"
-                                ) {
-                                  return (
-                                    <button
-                                      // target="_blank"
-                                      // href={domNode?.attribs.href}
-                                      // href="/search/map/top-places"
-                                      onClick={() => {
-                                        localStorage.setItem("clickedTopPlace", JSON.stringify(place));
-                                        router.push("/search/map/top-places");
-                                      }}
-                                    >
-                                      View on map
-                                    </button>
-                                  );
-                                } else {
-                                  return (
-                                    <Link href="/search/map/top-places">
-                                      View on map
-                                    </Link>
-                                  );
-                                }
-                              },
-                            })}
+                            <span className="ml-1 text-sm text-slate-400">
+                              {place?.rating || 0}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-        {/* Nearby Hotels */}
-        <div className="">
-          <div>
-            <h1 className="w-full mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
-              Hotels and Lodging near{" "}
-              <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
-                Destination Airport
-              </span>{" "}
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-            {hotels &&
-              Array.isArray(hotels) &&
-              hotels?.map((hotel, index) => {
-                if (!hotel?.photos) {
-                  return null;
-                }
-                return (
-                  <div
-                    key={index}
-                    className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:scale-95 transition-all duration-200"
-                  >
-                    <img
-                      className="rounded-t-lg w-full h-[39vh] sm:h-[20vh] lg:h-[39vh] min-h-[250px] object-cover object-center"
-                      src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${hotel?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                      alt="hotel"
-                    />
-                    <div className="px-5 pb-5 mt-4">
-                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        {hotel?.name}
-                      </h5>
-                      <div className="flex items-center mt-2.5 mb-5">
-                        {hotel?.rating &&
-                          hotel?.rating > 0 &&
-                          [...Array(Math.floor(hotel?.rating))].map((index) => {
-                            return (
-                              <FaStar
-                                key={index}
-                                className="w-5 h-5 text-yellow-300"
-                              />
-                            );
-                          })}
-                        {hotel?.rating &&
-                          hotel?.rating > 0 &&
-                          hotel?.rating < 5 &&
-                          hotel?.rating % 1 !== 0 && (
-                            <FaStarHalfAlt className="w-5 h-5 text-yellow-300" />
-                          )}
-                        {hotel?.rating &&
-                          [...Array(Math.floor(5 - hotel?.rating))].map(
-                            (index) => {
+
+                        <div className="mt-1 p-2">
+                          <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            {place.name}
+                          </h2>
+                          <p className="mt-1 text-sm text-slate-400">
+                            {place.vicinity}
+                          </p>
+                          <div className="flex flex-wrap gap-2 my-2">
+                            {place?.types.map((type, index) => {
+                              if (index > 6) return null;
                               return (
-                                <FaRegStar
+                                <span
                                   key={index}
-                                  className="w-5 h-5 text-yellow-300"
-                                />
+                                  className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-md dark:bg-blue-200 dark:text-blue-800"
+                                >
+                                  {type
+                                    .split("_")
+                                    .map((t) => {
+                                      return t.charAt(0).toUpperCase() + t.slice(1);
+                                    })
+                                    .join(" ")}
+                                </span>
                               );
-                            }
-                          )}
-                        {hotel?.rating && (
-                          <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                            {hotel?.rating}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {hotel?.vicinity}
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap gap-2 my-2">
-                        {hotel?.types.map((type, index) => {
-                          if (index > 6) return null;
-                          return (
-                            <span
-                              key={index}
-                              className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-md dark:bg-blue-200 dark:text-blue-800"
-                            >
-                              {type
-                                .split("_")
-                                .map((t) => {
-                                  return t.charAt(0).toUpperCase() + t.slice(1);
-                                })
-                                .join(" ")}
-                            </span>
-                          );
-                        })}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        {hotel?.user_ratings_total ? (
-                          <div>
-                            <p>Rated by</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {hotel?.user_ratings_total} cutomers
-                            </p>
-                          </div>
-                        ) : (
-                          <div>
-                            <p>Rated by</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              <span className="text-lg font-bold text-orange-500">
-                                0
-                              </span>{" "}
-                              cutomers
-                            </p>
-                          </div>
-                        )}
-
-                        <div className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white ml-auto">
-                          {hotel?.photos &&
-                            hotel?.photos[0]?.html_attributions[0] &&
-                            parse(hotel?.photos[0]?.html_attributions[0], {
-                              replace: (domNode) => {
-                                // console.log(domNode.);
-                                if (
-                                  domNode instanceof Element &&
-                                  domNode?.attribs &&
-                                  domNode.tagName === "a"
-                                ) {
-                                  return (
-                                    <button
-                                      // target="_blank"
-                                      // href={domNode?.attribs.href}
-                                      // href="/search/map/hotels"
-                                      onClick={() => {
-                                        localStorage.setItem("clickedHotel", JSON.stringify(hotel));
-                                        router.push("/search/map/hotels");
-                                      }}
-                                    >
-                                      View on map
-                                    </button>
-                                  );
-                                } else {
-                                  return (
-                                    <Link href="/search/map/hotels">
-                                      View on map
-                                    </Link>
-                                  );
-                                }
-                              },
                             })}
+                          </div>
+                          <div className="flex items-center justify-between">
+                            {place?.user_ratings_total ? (
+                              <div>
+                                <p>Rated by</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  <span className="text-lg font-bold text-orange-500">
+                                    {place?.user_ratings_total}
+                                  </span>{" "}
+                                  cutomers
+                                </p>
+                              </div>
+                            ) : (
+                              <div>
+                                <p>Rated by</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  <span className="text-lg font-bold text-orange-500">
+                                    0
+                                  </span>{" "}
+                                  cutomers
+                                </p>
+                              </div>
+                            )}
+
+                            <div className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white ml-auto">
+                              {place?.photos &&
+                                place?.photos[0]?.html_attributions[0] &&
+                                parse(place?.photos[0]?.html_attributions[0], {
+                                  replace: (domNode) => {
+                                    // console.log(domNode.);
+                                    if (
+                                      domNode instanceof Element &&
+                                      domNode?.attribs &&
+                                      domNode.tagName === "a"
+                                    ) {
+                                      return (
+                                        <button
+                                          // target="_blank"
+                                          // href={domNode?.attribs.href}
+                                          // href="/search/map/top-places"
+                                          onClick={() => {
+                                            localStorage.setItem("clickedTopPlace", JSON.stringify(place));
+                                            router.push("/search/map/top-places");
+                                          }}
+                                        >
+                                          View on map
+                                        </button>
+                                      );
+                                    } else {
+                                      return (
+                                        <Link href="/search/map/top-places">
+                                          View on map
+                                        </Link>
+                                      );
+                                    }
+                                  },
+                                })}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )
+        }
+        {/* Nearby Hotels */}
+        {
+          tab === 1 && (
+            <div className="">
+              <div>
+                <h1 className="w-full ml-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
+                  Hotels and Lodging near{" "}
+                  <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
+                    Destination Airport
+                  </span>{" "}
+                </h1>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                {hotels &&
+                  Array.isArray(hotels) &&
+                  hotels?.map((hotel, index) => {
+                    if (!hotel?.photos) {
+                      return null;
+                    }
+                    return (
+                      <div
+                        key={index}
+                        className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:scale-95 transition-all duration-200"
+                      >
+                        <img
+                          className="rounded-t-lg w-full h-[39vh] sm:h-[20vh] lg:h-[39vh] min-h-[250px] object-cover object-center"
+                          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${hotel?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+                          alt="hotel"
+                        />
+                        <div className="px-5 pb-5 mt-4">
+                          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            {hotel?.name}
+                          </h5>
+                          <div className="flex items-center mt-2.5 mb-5">
+                            {hotel?.rating &&
+                              hotel?.rating > 0 &&
+                              [...Array(Math.floor(hotel?.rating))].map((index) => {
+                                return (
+                                  <FaStar
+                                    key={index}
+                                    className="w-5 h-5 text-yellow-300"
+                                  />
+                                );
+                              })}
+                            {hotel?.rating &&
+                              hotel?.rating > 0 &&
+                              hotel?.rating < 5 &&
+                              hotel?.rating % 1 !== 0 && (
+                                <FaStarHalfAlt className="w-5 h-5 text-yellow-300" />
+                              )}
+                            {hotel?.rating &&
+                              [...Array(Math.floor(5 - hotel?.rating))].map(
+                                (index) => {
+                                  return (
+                                    <FaRegStar
+                                      key={index}
+                                      className="w-5 h-5 text-yellow-300"
+                                    />
+                                  );
+                                }
+                              )}
+                            {hotel?.rating && (
+                              <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+                                {hotel?.rating}
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {hotel?.vicinity}
+                            </p>
+                          </div>
+                          <div className="flex flex-wrap gap-2 my-2">
+                            {hotel?.types.map((type, index) => {
+                              if (index > 6) return null;
+                              return (
+                                <span
+                                  key={index}
+                                  className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-md dark:bg-blue-200 dark:text-blue-800"
+                                >
+                                  {type
+                                    .split("_")
+                                    .map((t) => {
+                                      return t.charAt(0).toUpperCase() + t.slice(1);
+                                    })
+                                    .join(" ")}
+                                </span>
+                              );
+                            })}
+                          </div>
+                          <div className="flex items-center justify-between">
+                            {hotel?.user_ratings_total ? (
+                              <div>
+                                <p>Rated by</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  {hotel?.user_ratings_total} cutomers
+                                </p>
+                              </div>
+                            ) : (
+                              <div>
+                                <p>Rated by</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  <span className="text-lg font-bold text-orange-500">
+                                    0
+                                  </span>{" "}
+                                  cutomers
+                                </p>
+                              </div>
+                            )}
+
+                            <div className="focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center my-btn-color text-white ml-auto">
+                              {hotel?.photos &&
+                                hotel?.photos[0]?.html_attributions[0] &&
+                                parse(hotel?.photos[0]?.html_attributions[0], {
+                                  replace: (domNode) => {
+                                    // console.log(domNode.);
+                                    if (
+                                      domNode instanceof Element &&
+                                      domNode?.attribs &&
+                                      domNode.tagName === "a"
+                                    ) {
+                                      return (
+                                        <button
+                                          // target="_blank"
+                                          // href={domNode?.attribs.href}
+                                          // href="/search/map/hotels"
+                                          onClick={() => {
+                                            localStorage.setItem("clickedHotel", JSON.stringify(hotel));
+                                            router.push("/search/map/hotels");
+                                          }}
+                                        >
+                                          View on map
+                                        </button>
+                                      );
+                                    } else {
+                                      return (
+                                        <Link href="/search/map/hotels">
+                                          View on map
+                                        </Link>
+                                      );
+                                    }
+                                  },
+                                })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )
+        }
         {/* Weather forecast */}
         {/* <div className="w-full flex flex-col space-y-4">
           <div>

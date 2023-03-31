@@ -4,6 +4,7 @@ import { Airport } from "../types/Airport";
 import { FlightType, Dictionaries } from "../types/Flight";
 
 type FlightCardType = {
+  timepass: number;
   flight: FlightType;
   classType: string;
   dstAirport: Airport;
@@ -11,6 +12,7 @@ type FlightCardType = {
   dictionaries: Dictionaries;
 };
 const FlightCard = ({
+  timepass,
   flight,
   classType,
   dstAirport,
@@ -31,10 +33,13 @@ const FlightCard = ({
   }
   return (
     <div className="">
-      <div className="max-w-full bg-white dark:bg-gray-700 flex flex-col rounded overflow-hidden shadow-lg">
+      <div className="max-w-full bg-white dark:bg-gray-700 flex flex-col rounded overflow-hidden shadow-lg sm:shadow-md">
         <div className="flex flex-row items-baseline flex-nowrap bg-gray-100 dark:bg-gray-900 p-2">
-          <IoIosAirplane className="text-gray-500" />
-          <div className="flex w-full justify-around items-center">
+          <div className="flex space-x-2 items-center">
+            <IoIosAirplane className="text-gray-500" /> 
+            <h1 className="ml-2 font-bold text-gray-500">{timepass}</h1>
+          </div>
+          <div className="flex w-full justify-end md:justify-around items-center">
             <div className="flex">
               <h1 className="ml-2 uppercase font-bold text-gray-500">
                 Departure
@@ -45,7 +50,7 @@ const FlightCard = ({
                 )}
               </p>
             </div>
-            <div className="flex">
+            <div className="hidden md:flex">
               <h1 className="ml-2 uppercase font-bold text-gray-500">
                 Last Ticketing Date
               </h1>
@@ -53,7 +58,7 @@ const FlightCard = ({
                 {flight?.lastTicketingDate}
               </p>
             </div>
-            <div className="flex">
+            <div className="hidden md:flex">
               <h1 className="ml-2 uppercase font-bold text-gray-500">
                 Available Seats
               </h1>
@@ -71,8 +76,8 @@ const FlightCard = ({
             </p>
           </div>
         </div>
-        <div className="mt-2 flex sm:flex-row mx-6 sm:justify-between flex-wrap ">
-          <div className="flex flex-row place-items-center p-2">
+        <div className="mt-2 flex sm:flex-row mx-6 justify-between flex-wrap ">
+          <div className="w-full sm:w-auto flex flex-row place-items-center p-2">
             <img
               alt="Qatar Airways"
               className="w-10 h-10"
@@ -90,7 +95,7 @@ const FlightCard = ({
               <p className="text-xs dark:text-white">
                 {
                   dictionaries?.aircraft?.[
-                    flight?.itineraries[0]?.segments[0]?.aircraft?.code
+                  flight?.itineraries[0]?.segments[0]?.aircraft?.code
                   ]
                 }
               </p>
@@ -124,16 +129,16 @@ const FlightCard = ({
           </div>
         </div>
         <div className="mt-4 bg-gray-100 dark:bg-gray-900 flex flex-row flex-wrap md:flex-nowrap justify-between items-baseline">
-          <div className="flex mx-6 py-4 flex-row flex-wrap justify-between items-center w-full">
+          <div className="flex sm:mx-6 py-4 flex-row flex-wrap justify-between items-center w-full">
             <div className="flex space-x-2">
-              <IoIosAirplane className="w-12 h-10 p-2 mx-2 self-center my-btn-color rounded-full fill-current text-white" />
+              <IoIosAirplane className="w-6 h-5 sm:w-12 sm:h-10 p-1 sm:p-2 mx-2 self-center my-btn-color rounded-full fill-current text-white" />
               <div className="text-sm mx-2 flex flex-col">
                 <p className="">Standard Ticket</p>
                 <p className="font-bold">Rs. {flight?.price?.total}</p>
                 <p className="text-xs text-gray-500">Price per adult</p>
               </div>
             </div>
-            <button className="w-32 h-11 rounded flex my-btn-color mx-2 justify-center place-items-center">
+            <button className="w-24 h-7 sm:w-32 sm:h-11 rounded flex my-btn-color mx-2 justify-center place-items-center">
               <div className="text-white">Book</div>
             </button>
           </div>
