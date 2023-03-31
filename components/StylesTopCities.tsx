@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import Paris from "../assets/destinations/paris.jpg";
-import Cairo from "../assets/destinations/cairo.jpg";
-import NewYork from "../assets/destinations/newyork.jpg";
-import Cancun from "../assets/destinations/cancun.jpg";
-import HongKong from "../assets/destinations/hongkong.jpg";
+// import Paris from "../assets/destinations/paris.jpg";
+// import Cairo from "../assets/destinations/cairo.jpg";
+// import NewYork from "../assets/destinations/newyork.jpg";
+// import Cancun from "../assets/destinations/cancun.jpg";
+import Bangalore from "../assets/destinations/bangalore.jpg";
+import Mumbai from "../assets/destinations/mumbai2.jpg";
+import Delhi from "../assets/destinations/delhi.jpg";
+import Dehradun from "../assets/destinations/dehradun2.jpg";
+import Hyderabad from "../assets/destinations/hyderabad.jpg";
 
-const imgDict = [Paris.src, Cairo.src, NewYork.src, Cancun.src, HongKong.src];
+const imgDict = [Mumbai.src, Delhi.src, Dehradun.src, Hyderabad.src, Bangalore.src];
 export const CardsContainer = styled.div`
   margin: 50px auto;
   width: 100%;

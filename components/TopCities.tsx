@@ -4,29 +4,29 @@ import { CardsContainer, CardSpacer, Card } from "./StylesTopCities";
 const TopCities = () => {
   const deals = [
     {
-      name: "Paris",
-      link: "",
-      image: "paris.jpg",
+      name: "Mumbai",
+      link: "https://www.thrillophilia.com/attractions/gateway-of-india",
+      image: "mumbai.jpg",
     },
     {
-      name: "Cairo",
-      link: "",
-      image: "cairo.jpg",
+      name: "Delhi",
+      link: "https://www.thrillophilia.com/tours/taj-mahal-entry-ticket-skip-the-line",
+      image: "delhi.jpg",
     },
     {
-      name: "New York",
-      link: "",
-      image: "newyork.jpg",
+      name: "Dehradun",
+      link: "https://www.thrillophilia.com/attractions/shikhar-fall",
+      image: "dehradun2.jpg",
     },
     {
-      name: "Cancun",
-      link: "",
-      image: "cancun.jpg",
+      name: "Bangalore",
+      link: "https://www.google.com/maps/place/Shivoham+Shiva+Temple/@12.9499897,77.510677,11z/data=!4m10!1m2!2m1!1sbangalore+shiva+temple!3m6!1s0x3bae13f778882c6f:0x14e38042a94c0cab!8m2!3d12.958333!4d77.656531!15sChZiYW5nYWxvcmUgc2hpdmEgdGVtcGxlWhgiFmJhbmdhbG9yZSBzaGl2YSB0ZW1wbGWSAQxoaW5kdV90ZW1wbGXgAQA!16s%2Fg%2F11bv5pt6dj",
+      image: "bangalore.jpg",
     },
     {
-      name: "Hong Kong",
-      link: "",
-      image: "hongkong.jpg",
+      name: "Hyderabad",
+      link: "https://www.thrillophilia.com/attractions/charminar",
+      image: "hyderabad.jpg",
     },
   ];
 
@@ -46,7 +46,7 @@ const TopCities = () => {
         {deals.map((deal, index) => {
           return (
             <CardSpacer offset={animationOffset[index]} key={index}>
-              <Card href="/" image={index}>
+              <Card href={deal.link} target="_blank" image={index}>
                 <h1 className="text-white text-xl font-bold pt-2 pb-2 w-full text-center sm:text-2xl bg-[rgb(255,111,42,52%)] hover:bg-[rgb(255,111,42,80%)] transition-all duration-200">
                   {deal.name}
                 </h1>
