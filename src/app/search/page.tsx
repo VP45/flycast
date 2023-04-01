@@ -19,6 +19,7 @@ import { Dictionaries, FlightLargeType, FlightType } from "../../../types/Flight
 import { MdOutlinePlace } from "react-icons/md";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import TripPlanner from "../../../components/TripPlanner";
+import TripPlannerCTA from "../../../components/TripPlannerCTA";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -309,7 +310,7 @@ const ResultPage = (props: Props) => {
 
   return (
     <div className="w-full sm:w-[98%] md:w-[90%] flex flex-col items-center mx-auto">
-      <div className="mt-4 mb-4 w-full">
+      <div className="pl-2 sm:ml-0 mt-4 w-full">
         {" "}
         {/* Back to Home */}
         <Link href="/" className="flex flex-row items-center space-x-2">
@@ -367,7 +368,7 @@ const ResultPage = (props: Props) => {
           )
         }
         {/* flight cards */}
-        <div className="w-full max-w-6xl flex flex-col space-y-6 p-2 md:p-0">
+        <div className="w-full max-w-6xl flex flex-col space-y-6 px-2 md:p-0">
           {
             Flights?.data &&
               Array.isArray(Flights?.data) &&
@@ -850,7 +851,7 @@ const ResultPage = (props: Props) => {
 
         {/* Trip Planner */}
         <div className="w-full flex flex-col space-y-4">
-          <TripPlanner/>
+          <TripPlannerCTA/>
         </div>
         {/* Weather forecast */}
         {/* <div className="w-full flex flex-col space-y-4">

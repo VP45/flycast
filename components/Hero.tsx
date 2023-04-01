@@ -17345,7 +17345,7 @@ const Hero = (props: Props) => {
     },
   };
   return (
-    <section className="w-full bg-white my-bg-color sm:pl-12 pr-12">
+    <section className="w-full bg-white my-bg-color sm:pl-12 sm:pr-12">
       <GetLocation />
       <div className="grid px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-7">

@@ -29,4 +29,6 @@ export type ContextType = {
   setTopPlaces: React.Dispatch<React.SetStateAction<TouristPlace[]>>;
   dstForMap: Airport;
   setDstForMap: React.Dispatch<React.SetStateAction<Airport>>;
+  showTripPlanner: boolean;
+  setShowTripPlanner: React.Dispatch<React.SetStateAction<boolean>>;
 };

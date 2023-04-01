@@ -60,8 +60,15 @@ const SearchForm = (props: Props) => {
   // });
 
   // Hadlers for form inputs .......
-  
+
   const handleValueChange = (newValue: DateValueType) => {
+    // check if valid date is selected i.e only future dates are allowed
+    // compare the date (2023-4-27) with current date (new Date())
+    if (newValue && newValue.startDate && new Date(newValue.startDate) <= new Date()) {
+      alert("Please select a valid date! (Future date)");
+      setDate({ startDate: new Date(), endDate: new Date().setMonth(3).toString() })
+      return;
+    }
     console.log("newValue:", newValue);
     setDate(newValue);
     // console.log("date:", date);
@@ -72,7 +79,7 @@ const SearchForm = (props: Props) => {
     const res = AirportsJSON.filter((airport) => {
       const fullAirportDetail =
         `${airport.name} ${airport.iata} ${airport.icao} ${airport.city} ${airport.country}`.toLowerCase();
-        // console.log(fullAirportDetail)
+      // console.log(fullAirportDetail)
       return fullAirportDetail.includes(e.target.value.toLowerCase());
     });
     setAirports(res);
@@ -88,6 +95,10 @@ const SearchForm = (props: Props) => {
     }
     if (dst === "") {
       alert("Please select destination airport");
+      return;
+    }
+    if (source === dst) {
+      alert("Source and destination cannot be same");
       return;
     }
     if (date?.startDate === "") {
@@ -129,11 +140,10 @@ const SearchForm = (props: Props) => {
                     e.preventDefault();
                     setIsOneWay(0);
                   }}
-                  className={`inline-block w-full p-4 ${
-                    isOneWay == 0
-                      ? "my-btn-color active text-white"
-                      : " bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                  } ring-0 rounded-l-lg focus:outline-none leading-none`}
+                  className={`inline-block w-full p-4 ${isOneWay == 0
+                    ? "my-btn-color active text-white"
+                    : " bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                    } ring-0 rounded-l-lg focus:outline-none leading-none`}
                 >
                   <BsArrowRightCircle className="h-6 w-6 mr-2 inline leading-none" />
                   Oneway
@@ -145,11 +155,10 @@ const SearchForm = (props: Props) => {
                     e.preventDefault();
                     setIsOneWay(1);
                   }}
-                  className={`inline-block w-full p-4 ring-0 ${
-                    isOneWay == 1
-                      ? "my-btn-color active text-white"
-                      : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                  } rounded-r-lg focus:outline-none`}
+                  className={`inline-block w-full p-4 ring-0 ${isOneWay == 1
+                    ? "my-btn-color active text-white"
+                    : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                    } rounded-r-lg focus:outline-none`}
                 >
                   <AiOutlineSwap className="h-6 w-6 mr-2 inline leading-none" />
                   Round Trip

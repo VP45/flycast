@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from "styled-components";
-
+import { AppContext } from "../context/AppContext";
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 type Props = {};
 const Panel = styled.div`
   display: flex;
@@ -91,20 +92,6 @@ const FormGroup = styled.div`
   width: 100%;
 `;
 
-const LanguageSelectorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-`;
-
-const LanguageRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-`;
-
 const TopLocationContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -113,33 +100,6 @@ const TopLocationContainer = styled.div`
   flex-wrap: wrap;
 
   margin-top: 0.4rem;
-`;
-
-const LanguageOption = styled.div`
-  display: flex;
-  font-size: 1.4rem;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 0.2rem;
-  padding: 0.4rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  transition: border-color 0.2s ease-in-out;
-  border: 1px solid transparent;
-
-  &:hover {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  &.selected {
-    border: 1px solid #ff6f2a;
-    border-radius: 0.4rem;
-  }
-
-  &:hover {
-    border-color: #333;
-    border-radius: 0.4rem;
-  }
 `;
 
 const PinButton = styled.div`
@@ -216,7 +176,7 @@ const CuisineTypesContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const CuisineType = styled.select`
+const CuisineType = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -339,17 +299,6 @@ const options = {
     { name: "Chinese", emoji: "🥡" },
   ],
 
-  languages: [
-    { value: "en", label: "English", icon: "🇺🇸" },
-    { value: "tr", label: "Türkçe", icon: "🇹🇷" },
-    { value: "fr", label: "Français", icon: "🇫🇷" },
-    { value: "es", label: "Español", icon: "🇪🇸" },
-    { value: "de", label: "Deutsch", icon: "🇩🇪" },
-    { value: "it", label: "Italiano", icon: "🇮🇹" },
-    { value: "pt", label: "Português", icon: "🇵🇹" },
-    { value: "ru", label: "Русский", icon: "🇷🇺" },
-    { value: "ja", label: "日本語", icon: "🇯🇵" },
-  ],
 };
 
 const topLocations = [
@@ -362,12 +311,6 @@ const topLocations = [
 interface TopLocation {
   name: string;
   value: string;
-}
-
-interface Language {
-  value: string;
-  label: string;
-  icon: string;
 }
 
 interface CuisineType {
@@ -386,7 +329,6 @@ interface DefaultValues {
   // activityType: string[];
   cuisineType: CuisineType[];
   tripDuration: string;
-  language: string;
 }
 
 
@@ -399,8 +341,7 @@ const defaultValues = {
   transportationType: "Bus",
   activitiesNew: [],
   cuisineType: [options.cuisineTypes[0]],
-  tripDuration: "3",
-  language: options.languages[0].value,
+  tripDuration: "3"
 };
 
 type GenerateProps = {
@@ -419,24 +360,22 @@ const TripPlanner = (props: Props) => {
 
 
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState('');
   const [values, setValues] = useState<DefaultValues>(defaultValues);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [selectedCuisineTypes, setSelectedCuisineTypes] = useState<CuisineType[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    options.languages[0]
-  );
+  const { showTripPlanner, setShowTripPlanner } = useContext(AppContext)
 
   const handleCuisineTypeClick = (cuisineType: CuisineType) => {
-    if (selectedCuisineTypes.includes(cuisineType)) {
+    if (selectedCuisineTypes.find((cuisine) => cuisine.name === cuisineType.name) !== undefined) {
       setSelectedCuisineTypes(
-        selectedCuisineTypes.filter((item) => item !== cuisineType)
+        selectedCuisineTypes.filter((item) => item.name !== cuisineType.name)
       );
       setValues((prevState) => ({
         ...prevState,
         cuisineType: selectedCuisineTypes.filter(
-          (item: CuisineType) => item !== cuisineType
+          (item: CuisineType) => item.name !== cuisineType.name
         ),
       }));
     } else {
@@ -567,43 +506,101 @@ const TripPlanner = (props: Props) => {
     }));
   };
 
-  const handleLanguageClick = (option: Language) => {
-    setSelectedLanguage(option); // itt was option.value before
 
-    setValues((prevState) => ({
-      ...prevState,
-      language: option.label,
-    }));
-  };
-
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setResponse('');
     setLoading(true);
-    let prompt = `Generate a personalized travel itinerary for a trip to ${values.destinationCountry} with a budget of ${values.budget}. The traveler is interested in a ${values.travelStyle} vacation and enjoys ${values.interestsNew}. They are looking for ${values.accommodationType} accommodations and prefer ${values.transportationType} transportation. The itinerary should include ${values.activitiesNew} activities and ${values.cuisineType} dining options. Please provide a detailed itinerary with daily recommendations for ${values.tripDuration} days, including suggested destinations, activities, and dining options. The itinerary should be written in ${values.language}. `;
+    let prompt = `Generate a personalized travel itinerary for a trip to ${values.destinationCountry} with a budget of ${values.budget}. The traveler is interested in a ${values.travelStyle} vacation and enjoys ${values.interestsNew}. They are looking for ${values.accommodationType} accommodations and prefer ${values.transportationType} transportation. The itinerary should include ${values.activitiesNew} activities and ${values.cuisineType[0].name}, ${values.cuisineType[1].name}, ${values.cuisineType[2].name} dining options. Please provide a detailed itinerary with daily recommendations for ${values.tripDuration} days, including suggested destinations, activities, and dining options. The itinerary should be written in English. Generate response as well formated markdown code`;
 
-    fetch(`https://c3-na.altogic.com/e:6407519d2f0b61e4d9dda50f/travel`, {
+
+    console.log(prompt);
+    console.log(values);
+    setLoading(false);
+    // fetch(`https://c3-na.altogic.com/e:6407519d2f0b61e4d9dda50f/travel`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ prompt: prompt }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setResponse(data.choices[0].message.content);
+    //     console.log(data.choices[0].message.content);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     setLoading(false);
+    //   });
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/trip`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ prompt: prompt }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setResponse(data.choices[0].message.content);
-        console.log(data.choices[0].message.content);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    // This data is a ReadableStream
+    const data = response.body;
+    if (!data) {
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setResponse((prev) => prev + chunkValue);
+      console.log(chunkValue);
+    }
+    // scrollToBioszz();
+    setLoading(false);
   };
   return (
-    <>
-      {/* Container for demo purpose */}
-      <div className="container my-24 px-6 mx-auto">
+    <div className='md:p-12 shadow-lg  px-6'>
+      {/* close button on top right corner */}
+      <div className='flex justify-end'>
+        <button
+          className='text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700'
+          aria-label='Close'
+          onClick={() => {
+            setShowTripPlanner(false);
+          }}
+        >
+          <svg
+            className='h-6 w-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M6 18L18 6M6 6l12 12'
+            />
+          </svg>
+        </button>
+      </div>
+      {/* title */}
+      <div className='flex flex-col items-center justify-center mt-12 mb-6'>
+        <h1 className='text-4xl font-bold text-gray-800'>Trip Planner</h1>
+        <p className='text-gray-500 md:mb-12'>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem
+        </p>
+      </div>
+      <div className="container mx-auto">
         {/* Section: Design Block */}
         <section className="mb-32 text-gray-800">
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-x-12 lg:mb-0">
@@ -821,19 +818,6 @@ const TripPlanner = (props: Props) => {
                     (select multiple options)
                   </p>
                 </Label>
-                {/* <Select
-                  id="activityType"
-                  name="activityType"
-                  multiple
-                  value={values.activitiesNew}
-                  onChange={handleMultiSelectChange}
-                >
-                  {options.activityTypes.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Select> */}
                 <InterestsContainerNew>
                   {options.activityTypes.map((activity, index) => (
                     <InterestItemNew
@@ -846,30 +830,26 @@ const TripPlanner = (props: Props) => {
                         console.log(selectedActivities);
                         console.log(activity);
                       }}
-                    // value={interest}
                     >
-                      {/* <InterestEmoji aria-label="emoji">
-                        {interest.emoji}
-                      </InterestEmoji> */}
                       <InterestName>{activity}</InterestName>
                     </InterestItemNew>
                   ))}
                 </InterestsContainerNew>
                 <Label htmlFor="cuisineType">Cuisine Type</Label>
-                {/* <CuisineTypesContainer>
+                <CuisineTypesContainer>
                   {options.cuisineTypes.map((cuisineType) => (
                     <CuisineType
-                      multiple
-                      value={values.cuisineType}
-                      onChange={handleMultiSelectChange}
+                      // multiple
+                      // value={values.cuisineType}
+                      // onChange={handleMultiSelectChange}
                       key={cuisineType.name}
                       className={
-                        selectedCuisineTypes.includes(cuisineType.name)
+                        selectedCuisineTypes.find((cuisine) => cuisine.name === cuisineType.name) !== undefined
                           ? "selected"
                           : ""
                       }
                       onClick={() => {
-                        handleCuisineTypeClick(cuisineType.name);
+                        handleCuisineTypeClick(cuisineType);
                       }}
                     >
                       <span role="img" aria-label={cuisineType.name}>
@@ -881,29 +861,7 @@ const TripPlanner = (props: Props) => {
                       <span>{cuisineType.name}</span>
                     </CuisineType>
                   ))}
-                </CuisineTypesContainer> */}
-
-                {/* <LanguageSelectorContainer>
-                  <Label>Language</Label>
-                  <LanguageRow>
-                    {options.languages.map((option) => (
-                      <LanguageOption
-                        key={option.value}
-                        onClick={() => {
-                          handleLanguageClick(option);
-                        }}
-                        value={values.language}
-                        className={
-                          selectedLanguage === option.value ? "selected" : ""
-                        }
-                      >
-                        <span role="img" aria-label={option.label}>
-                          {option.icon}
-                        </span>
-                      </LanguageOption>
-                    ))}
-                  </LanguageRow>
-                </LanguageSelectorContainer> */}
+                </CuisineTypesContainer>
                 <GenerateButton
                   loading={loading}
                   type="submit"
@@ -912,45 +870,64 @@ const TripPlanner = (props: Props) => {
                 ></GenerateButton>
               </FormContainer>
             </Panel>
-            <div className="mb-6 md:mb-0">
-              <p className="font-bold mb-4">Anim pariatur cliche reprehenderit?</p>
-              <p className="text-gray-500 mb-12">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem
-                numquam dolore molestias aperiam culpa alias veritatis architecto
-                eos, molestiae vitae ex eligendi libero eveniet dolorem, doloremque
-                rem aliquid perferendis.
-              </p>
-              <p className="font-bold mb-4">
-                Non cupidatat skateboard dolor brunch?
-              </p>
-              <p className="text-gray-500 mb-12">
-                Distinctio corporis, iure facere ducimus quos consectetur ipsa ut
-                magnam autem doloremque ex! Id, sequi. Voluptatum magnam sed fugit
-                iusto minus et suscipit? Minima sunt at nulla tenetur, numquam unde
-                quod modi magnam ab deserunt ipsam sint aliquid dolores libero
-                repellendus cupiditate mollitia quidem dolorem odit
-              </p>
-              <p className="font-bold mb-4">
-                Praesentium voluptatibus temporibus consequatur non aspernatur?
-              </p>
-              <p className="text-gray-500 mb-12">
-                Minima sunt at nulla tenetur, numquam unde quod modi magnam ab
-                deserunt ipsam sint aliquid dolores libero repellendus cupiditate
-                mollitia quidem dolorem.
-              </p>
-              <p className="font-bold mb-4">
-                Voluptatum magnam sed fugit iusto minus et suscipit?
-              </p>
-              <p className="text-gray-500 mb-12">
-                Laudantium perferendis, est alias iure ut veniam suscipit dolorem
-                fugit. Et ipsam corporis earum ea ut quae cum non iusto blanditiis
-                ipsum dolor eius reiciendis, velit adipisci quas.
-              </p>
+            <div className="mb-6 md:mb-0 h-screen border-2 rounded-md px-4 overflow-y-scroll relative">
+              {/* Your plan is ready msg */}
+              {response && (
+                <div className="flex flex-col items-center sticky top-0 py-4 shadow-md bg-white">
+                  <h1 className="text-2xl font-bold text-center">
+                    Your plan is ready!
+                  </h1>
+                  <p className="text-center">
+                    Click on the button below to download your plan.
+                  </p>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => {
+                      const blob = new Blob([response], {
+                        type: "text/plain;charset=utf-8",
+                      });
+                      const url = URL.createObjectURL(blob);
+                      const link = document.createElement("a");
+                      link.setAttribute("href", url);
+                      link.setAttribute("download", "travel-plan.txt");
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                      URL.revokeObjectURL(url);
+                      return false;
+                    }}
+                  >
+                    Download
+                  </button>
+                </div>
+              )}
+              {/* Your plan is ready msg */}
+              {
+                response === "" && (
+                  <div className='w-full h-full flex items-center justify-center'>
+                    <div className="flex flex-col items-center">
+                      <h1 className="text-2xl font-bold text-center">
+                        Your plan will appear here
+                      </h1>
+                      <p className="text-center">
+                        Click on the generate button to generate your plan.
+                      </p>
+                    </div>
+                  </div>
+                )
+              }
+              {
+                response.length > 0 && (
+                  <div className='overflow-y-scroll'>
+                    <ReactMarkdown>{response}</ReactMarkdown>
+                  </div>
+                )
+              }
             </div>
           </div>
         </section>
       </div>
-    </>
+    </div>
 
   )
 }
