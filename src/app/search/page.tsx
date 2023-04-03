@@ -352,15 +352,15 @@ const ResultPage = (props: Props) => {
               </div>
               <div className="w-full">
                 {
-                  flights?.data &&
-                  Array.isArray(flights?.data) && flightPred && (
+                  Flights?.data &&
+                  Array.isArray(Flights?.data) && flightPred && (
                     <FlightCard
                       timepass={0}
                       flight={flightPred}
                       classType={classType}
                       dstAirport={dstAirport}
                       srcAirport={srcAirport}
-                      dictionaries={flights?.dictionaries}
+                      dictionaries={Flights?.dictionaries}
                     />)
                 }
               </div>
@@ -371,7 +371,7 @@ const ResultPage = (props: Props) => {
         <div className="w-full max-w-6xl flex flex-col space-y-6 px-2 md:p-0">
           {
             Flights?.data &&
-              Array.isArray(Flights?.data) &&
+              Array.isArray(flights?.data) &&
               Flights?.data.length > 5
               ?
               (
@@ -409,7 +409,7 @@ const ResultPage = (props: Props) => {
         </div>
         {
           Flights?.data &&
-          Array.isArray(Flights?.data) &&
+          Array.isArray(flights?.data) &&
           Flights?.data.length > 5
           && (
             <div>
@@ -525,7 +525,7 @@ const ResultPage = (props: Props) => {
           tab === 0 && (
             <div className="">
               <div>
-                <h1 className="w-full ml-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
+                <h1 className="w-full pl-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
                   Top{" "}
                   <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
                     Places
@@ -659,22 +659,26 @@ const ResultPage = (props: Props) => {
                   })
                 }
               </div>
-              <div className="flex items-center justify-end pr-6 space-x-2"              >
-                <p className="text-lg text-[#ff6f2a] cursor-pointer"
-                  onClick={() => {
-                    setViewMorePlaces(!viewMorePlaces);
-                    setPlacesCardEnd(viewMorePlaces ? 6 : topPlaces?.length)
-                  }}>
-                  View {viewMorePlaces ? "less" : "more"}{" "}
-                </p>
-                {
-                  viewMorePlaces ? (
-                    <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
-                  ) : (
-                    <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
-                  )
-                }
-              </div>
+              {
+                topPlaces && topPlaces.length > 6 && (
+                  <div className="flex items-center justify-end pr-6 space-x-2"              >
+                    <p className="text-lg text-[#ff6f2a] cursor-pointer"
+                      onClick={() => {
+                        setViewMorePlaces(!viewMorePlaces);
+                        setPlacesCardEnd(viewMorePlaces ? 6 : topPlaces?.length)
+                      }}>
+                      View {viewMorePlaces ? "less" : "more"}{" "}
+                    </p>
+                    {
+                      viewMorePlaces ? (
+                        <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
+                      ) : (
+                        <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
+                      )
+                    }
+                  </div>
+                )
+              }
             </div>
           )
         }
@@ -683,7 +687,7 @@ const ResultPage = (props: Props) => {
           tab === 1 && (
             <div className="">
               <div>
-                <h1 className="w-full ml-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
+                <h1 className="w-full pl-4 mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
                   Hotels and Lodging near{" "}
                   <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
                     Destination Airport
@@ -829,29 +833,33 @@ const ResultPage = (props: Props) => {
                     );
                   })}
               </div>
-              <div className="flex items-center justify-end pr-6 space-x-2"              >
-                <p className="text-lg text-[#ff6f2a] cursor-pointer"
-                  onClick={() => {
-                    setViewMoreHotels(!viewMoreHotels);
-                    setHotelsCardEnd(viewMoreHotels ? 6 : hotels?.length)
-                  }}>
-                  View {viewMoreHotels ? "less" : "more"}{" "}
-                </p>
-                {
-                  viewMoreHotels ? (
-                    <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
-                  ) : (
-                    <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
-                  )
-                }
-              </div>
+              {
+                hotels && hotels.length > 6 && (
+                  <div className="flex items-center justify-end pr-6 space-x-2"              >
+                    <p className="text-lg text-[#ff6f2a] cursor-pointer"
+                      onClick={() => {
+                        setViewMoreHotels(!viewMoreHotels);
+                        setHotelsCardEnd(viewMoreHotels ? 6 : hotels?.length)
+                      }}>
+                      View {viewMoreHotels ? "less" : "more"}{" "}
+                    </p>
+                    {
+                      viewMoreHotels ? (
+                        <AiFillCaretUp className="text-lg text-[#ff6f2a] cursor-pointer" />
+                      ) : (
+                        <AiFillCaretDown className="text-lg text-[#ff6f2a] cursor-pointer" />
+                      )
+                    }
+                  </div>
+                )
+              }
             </div>
           )
         }
 
         {/* Trip Planner */}
         <div className="w-full flex flex-col space-y-4">
-          <TripPlannerCTA/>
+          <TripPlannerCTA />
         </div>
         {/* Weather forecast */}
         {/* <div className="w-full flex flex-col space-y-4">

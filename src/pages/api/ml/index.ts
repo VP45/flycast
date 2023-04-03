@@ -2,7 +2,7 @@ import { NextApiResponse, NextApiRequest } from "next";
 
 const getFlightPrice = async (req: NextApiRequest, res: NextApiResponse) => {
   const { input } = req.body;
-  fetch("https://2cce-103-44-50-74.in.ngrok.io/getPrice", {
+  fetch("https://a630-2401-4900-172d-9ed8-b8fb-27d1-6436-9e8a.in.ngrok.io/getPrice", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
