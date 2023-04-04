@@ -22,10 +22,11 @@ const TripPlannerCTA = (props: Props) => {
                         Nullam auctor, nisl eget ultricies tincidunt, nunc nisl
                         aliquam mauris, vitae ultricies nunc nisl eget nunc. Sed
                     </p>
-                    <button
+                    <a
+                        href='#trip-planner'
                         onClick={() => setShowTripPlanner(true)}
                         className='bg-white text-gray-900 hover:text-white border-2 border-white hover:bg-transparent px-4 py-2 rounded-lg font-semibold'>Plan Your Trip
-                    </button>
+                    </a>
                 </div>
                 <div>
                     <div>

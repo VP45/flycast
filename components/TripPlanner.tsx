@@ -567,7 +567,7 @@ const TripPlanner = (props: Props) => {
     setLoading(false);
   };
   return (
-    <div className='md:p-12 shadow-lg  px-6'>
+    <div className='md:p-12 shadow-lg  px-6' id='trip-planner'>
       {/* close button on top right corner */}
       <div className='flex justify-end'>
         <button

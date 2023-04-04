@@ -32,16 +32,16 @@ const FlightCard = ({
     return newTime;
   }
   return (
-    <div className="">
-      <div className="max-w-full bg-white dark:bg-gray-700 flex flex-col rounded overflow-hidden shadow-lg sm:shadow-md">
+    <div className="w-full">
+      <div className="max-w-full w-[100%] bg-white dark:bg-gray-700 flex flex-col rounded overflow-hidden shadow-lg sm:shadow-md">
         <div className="flex flex-row items-baseline flex-nowrap bg-gray-100 dark:bg-gray-900 p-2">
           <div className="flex space-x-2 items-center">
             <IoIosAirplane className="text-gray-500" /> 
-            <h1 className="ml-2 font-bold text-gray-500">{timepass}</h1>
+            <h1 className="mx-2 font-bold text-gray-500">{timepass}</h1>
           </div>
           <div className="flex w-full justify-end md:justify-around items-center">
             <div className="flex">
-              <h1 className="ml-2 uppercase font-bold text-gray-500">
+              <h1 className="uppercase font-bold text-gray-500">
                 Departure
               </h1>
               <p className="ml-2 font-normal text-gray-500">

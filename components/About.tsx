@@ -4,7 +4,7 @@ type Props = {}
 
 const About = (props: Props) => {
     return (
-        <div className='md:w-[90%] md:mt-16 px-8 py-8 md:px-12 md:py-12 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 md:justify-end items-center bg-gray-900 bg-bottom bg-cover bg-no-repeat bg-blend-normal border-2' style={{
+        <div className='md:w-[90%] md:mt-16 px-8 py-8 md:px-12 md:py-12 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 md:justify-end items-center bg-gray-900 bg-bottom bg-cover bg-no-repeat bg-blend-normal md:border-2' style={{
             background: `linear-gradient(to top, rgba(0,0,0,0.73), rgba(0,0,0,0.609)),url(${AboutBG.src})`,
             backgroundPositionY: 'center',
         }}>
