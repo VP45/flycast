@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 // import axios
 import axios from 'axios';
-import { WeatherObject } from '../types/Weather';
+import { WeatherType } from '../types/Weather';
 // import icons
 import {
   IoMdSunny,
@@ -25,12 +25,18 @@ import {
 
 import { TbTemperatureCelsius } from 'react-icons/tb';
 import { ImSpinner8 } from 'react-icons/im';
+import { Airport } from '../types/Airport';
 
 // api key
 const APIkey = 'bcf2048bc3be154bded8f277f580ba2e';
 
-const WeatherCard = () => {
-  const [data, setData] = useState<WeatherObject>();
+type Props = {
+  data: WeatherType;
+  dstAirport: Airport;
+};
+
+const WeatherCard = ({ data , dstAirport} : Props) => {
+  // const [data, setData] = useState<WeatherType>();
   const [location, setLocation] = useState('Mumbai');
   const [inputValue, setInputValue] = useState('');
   const [animate, setAnimate] = useState(false);
@@ -38,28 +44,28 @@ const WeatherCard = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   // fetch the data
-  useEffect(() => {
-    // set loading to true
-    setLoading(true);
-    // const url = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${location}&units=metric&appid=${APIkey}`
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${APIkey}`;
+  // useEffect(() => {
+  //   // set loading to true
+  //   setLoading(true);
+  //   // const url = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${location}&units=metric&appid=${APIkey}`
+  //   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${APIkey}`;
 
-    axios
-      .get(url)
-      .then((res) => {
-        // set the data after 1500 ms
-        setTimeout(() => {
-          setData(res.data);
-          // set loading to false
-          setLoading(false);
-          console.log(res);
-        }, 1500);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setErrorMsg(err);
-      });
-  }, [location]);
+  //   axios
+  //     .get(url)
+  //     .then((res) => {
+  //       // set the data after 1500 ms
+  //       setTimeout(() => {
+  //         setData(res.data);
+  //         // set loading to false
+  //         setLoading(false);
+  //         console.log(res);
+  //       }, 1500);
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //       setErrorMsg(err);
+  //     });
+  // }, [location]);
 
   // error message
   useEffect(() => {
@@ -150,12 +156,15 @@ const WeatherCard = () => {
               <div>
                 {/* country name */}
                 <div className='text-2xl font-semibold'>
-                  {data?.name}, {data?.sys?.country}
+                  {dstAirport?.city}, {dstAirport?.country}
                 </div>
                 {/* date */}
                 <div>
-                  {date?.getUTCDate()}/{date?.getUTCMonth() + 1}/
-                  {date?.getUTCFullYear()}
+                  {/* {date?.getUTCDate()}/{date?.getUTCMonth() + 1}/
+                  {date?.getUTCFullYear()} */}
+                  {
+                    data?.dt_txt.toString().split(' ')[0].split('-').reverse().join('-')
+                  }
                 </div>
               </div>
             </div>

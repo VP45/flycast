@@ -20,6 +20,7 @@ import { MdOutlinePlace } from "react-icons/md";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import TripPlanner from "../../../components/TripPlanner";
 import TripPlannerCTA from "../../../components/TripPlannerCTA";
+import WeatherCarousel from "../../../components/WeatherCarousel";
 type Props = {};
 
 const ResultPage = (props: Props) => {
@@ -371,7 +372,7 @@ const ResultPage = (props: Props) => {
         <div className="w-full max-w-6xl flex flex-col space-y-6 px-2 md:p-0">
           {
             Flights?.data &&
-              Array.isArray(flights?.data) &&
+              Array.isArray(Flights?.data) &&
               Flights?.data.length > 5
               ?
               (
@@ -409,7 +410,7 @@ const ResultPage = (props: Props) => {
         </div>
         {
           Flights?.data &&
-          Array.isArray(flights?.data) &&
+          Array.isArray(Flights?.data) &&
           Flights?.data.length > 5
           && (
             <div>
@@ -862,7 +863,7 @@ const ResultPage = (props: Props) => {
           <TripPlannerCTA />
         </div>
         {/* Weather forecast */}
-        {/* <div className="w-full flex flex-col space-y-4">
+        <div className="w-full flex flex-col space-y-4">
           <div>
             <h1 className="w-full mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
               Weather Forecast for{" "}
@@ -871,10 +872,14 @@ const ResultPage = (props: Props) => {
               </span>{" "}
             </h1>
           </div>
-          <div>
-            <WeatherCarousel />
-          </div>
-        </div> */}
+          {
+            dstAirport && (
+              <div>
+                <WeatherCarousel lat={dstAirport.lat} lon={dstAirport.lon} dstAirport={dstAirport} />
+              </div>
+            )
+          }
+        </div>
       </div>
     </div>
   );
