@@ -188,7 +188,7 @@ a:hover {
 }
 
 .mapboxgl-popup-content h3 {
-  background: #fc9363;
+  background: #ff6f2a;
   color: #fff;
   margin: 0;
   padding: 10px;
@@ -236,3 +236,13 @@ a:hover {
   margin-left: 25%;
   top: 10px;
 }
+
+/* @media (prefers-color-scheme: dark) {
+  .listings .item.active {
+    background-color: rgb(55, 65, 81);
+  }
+
+  .mapboxgl-popup-content h4 {
+    background-color: rgb(15, 20, 33);
+  }
+} */

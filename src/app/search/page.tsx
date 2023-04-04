@@ -545,7 +545,7 @@ const ResultPage = (props: Props) => {
                     return (
                       <div
                         key={index}
-                        className="max-w-sm md:max-w-md cursor-pointer rounded-xl dark:bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
+                        className="max-w-sm md:max-w-md cursor-pointer rounded-xl bg-gray-50 dark:bg-gray-800 p-3 shadow-lg hover:shadow-xl hover:scale-95 transition-all duration-200"
                       >
                         <div className="relative flex items-end overflow-hidden rounded-xl">
                           <img
@@ -574,7 +574,7 @@ const ResultPage = (props: Props) => {
                           <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             {place.name}
                           </h2>
-                          <p className="mt-1 text-sm text-slate-400">
+                          <p className="mt-1 text-sm text-gray-600 dark:text-slate-400">
                             {place.vicinity}
                           </p>
                           <div className="flex flex-wrap gap-2 my-2">
@@ -701,7 +701,7 @@ const ResultPage = (props: Props) => {
                     return (
                       <div
                         key={index}
-                        className="w-full max-w-sm md:max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:scale-95 transition-all duration-200"
+                        className="w-full max-w-sm md:max-w-md bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:scale-95 transition-all duration-200"
                       >
                         <img
                           className="rounded-t-lg w-full h-[39vh] sm:h-[20vh] lg:h-[39vh] min-h-[250px] object-cover object-center"

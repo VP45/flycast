@@ -42,20 +42,20 @@ const FormContainer = styled.form`
 `;
 
 const Label = styled.label`
-  font-size: 0.8rem;
+  font-size: 18px;
   font-weight: bold;
   font-weight: 600;
   color: #000fs0;
-  padding: 0.4rem;
+  padding: 10px 0 2px 5px;
 `;
 
 const Input = styled.input`
-  border-radius: 0.4rem;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  font-size: 0.8rem;
   color: #000;
-  width: calc(100% - 2rem);
+  width: calc(100% - 40px);
   padding: 0.6rem 0.6rem;
+  margin-left: 5px;
   transition: border-color 0.3s ease-in-out;
 
   &:focus {
@@ -64,12 +64,12 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  padding: 0.6rem 0.6rem;
-  border-radius: 0.5rem;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  font-size: 0.8rem;
-  width: calc(100% - 0.6rem);
+  font-size: 15px;
+  width: calc(100% - 35px);
   color: #000;
+  -webkit-transition: border-color 0.3s ease-in-out;
   transition: border-color 0.3s ease-in-out;
 
   &:focus {
@@ -139,9 +139,9 @@ const InterestsContainerNew = styled.div`
 
 const InterestItemNew = styled.div`
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   align-items: center;
-  padding: 4px;
+  padding: 0 4px;
   margin-right: 4px;
   margin-bottom: 4px;
   border: 1px solid transparent;
@@ -182,7 +182,7 @@ const CuisineType = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 14px;
   padding: 0.4rem;
   margin-bottom: 5px;
   margin-right: 5px;
@@ -302,9 +302,9 @@ const options = {
 };
 
 const topLocations = [
-  { name: "Milano, Italy", value: "Milano/Italy" },
-  { name: "Paris, France", value: "Paris/France" },
-  { name: "Los Angeles, CA", value: "Los Angeles/California" },
+  { name: "Mumbai, India", value: "Mumbai, India" },
+  { name: "Delhi, India", value: "Delhi, India" },
+  { name: "Agra, India", value: "Agra, India" },
   // add more top locations as needed
 ];
 
@@ -334,7 +334,7 @@ interface DefaultValues {
 
 const defaultValues = {
   destinationCountry: "",
-  budget: "250 USD",
+  budget: "10000 INR",
   travelStyle: options.travelStyles[0],
   interestsNew: [],
   accommodationType: options.accommodationTypes[0],
@@ -595,14 +595,14 @@ const TripPlanner = (props: Props) => {
       </div>
       {/* title */}
       <div className='flex flex-col items-center justify-center mt-12 mb-6'>
-        <h1 className='text-4xl font-bold text-gray-800'>Trip Planner</h1>
-        <p className='text-gray-500 md:mb-12'>
+        <h1 className='text-4xl font-bold text-gray-800 dark:text-white'>Trip Planner</h1>
+        <p className='text-gray-500 md:mb-12 dark:text-gray-300'>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem
         </p>
       </div>
       <div className="container mx-auto">
         {/* Section: Design Block */}
-        <section className="mb-32 text-gray-800">
+        <section className="mb-32 text-gray-800 dark:text-white">
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-x-12 lg:mb-0">
             {/* <div className="mb-12 lg:mb-0">
               <h2 className="text-3xl font-bold mb-6">
@@ -659,24 +659,26 @@ const TripPlanner = (props: Props) => {
                 </button>
               </form>
             </div> */}
-            <Panel>
-              <FormContainer onSubmit={handleSubmit}>
-                <Label htmlFor="destinationCountry">Destination Country</Label>
+            <Panel className='dark:bg-gray-900 rounded-md border-2'>
+              <FormContainer onSubmit={handleSubmit} className='justify-center'>
+                <Label htmlFor="destinationCountry">Destination Place</Label>
                 <Input
                   type="text"
-                  placeholder="e.g. San Francisco/USA, Paris/France, Istanbul/Turkey, etc."
+                  placeholder="e.g. Mumbai/India Delhi/India, etc."
                   id="destinationCountry"
                   name="destinationCountry"
                   value={values.destinationCountry}
                   onChange={handleChangeInput}
                   required
+                  className='rounded-md dark:bg-gray-700 text-sm dark:text-white'
                 />
                 <TopLocationContainer>
-                  <Label htmlFor="topDestinations">🔥Top Destionations:</Label>
+                  <Label htmlFor="topDestinations">Top Destionations:</Label>
                   {topLocations.map((location) => (
                     <PinButton
                       key={location.value}
                       onClick={() => handleLocationClick(location)}
+                      className='dark:text-gray-400 text-sm mt-[10px] dark:hover:bg-slate-200 dark:hover:text-gray-900'
                     >
                       {location.name}
                     </PinButton>
@@ -686,19 +688,14 @@ const TripPlanner = (props: Props) => {
                   <FormGroup>
                     <Label htmlFor="budget">
                       Budget
-                      <p
-                        style={{
-                          display: "inline-block",
-                          color: "#666",
-                          fontSize: "10px",
-                        }}
-                      >
+                      <p className='inline-block text-gray-700 dark:text-gray-200 text-[14px] ml-1 font-medium'>
                         (with currency)
                       </p>
                     </Label>
                     <Input
                       type="text"
-                      placeholder="e.g. $1000 USD, 1000 EUR, etc."
+                      className='rounded-md dark:bg-gray-700 text-sm dark:text-white'
+                      placeholder="e.g. 15000 INR"
                       id="budget"
                       name="budget"
                       value={values.budget}
@@ -707,20 +704,15 @@ const TripPlanner = (props: Props) => {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="tripDuration">
+                    <Label htmlFor="tripDuration" >
                       Trip Duration
-                      <p
-                        style={{
-                          display: "inline-block",
-                          color: "#666",
-                          fontSize: "10px",
-                        }}
-                      >
+                      <p className='inline-block text-gray-700 dark:text-gray-200 text-[14px] ml-1 font-medium' >
                         (in days)
                       </p>
                     </Label>
                     <Input
                       type="number"
+                      className='rounded-md dark:bg-gray-700 text-sm dark:text-white'
                       id="tripDuration"
                       name="tripDuration"
                       value={values.tripDuration}
@@ -745,7 +737,7 @@ const TripPlanner = (props: Props) => {
                       <InterestEmoji aria-label="emoji">
                         {interest.emoji}
                       </InterestEmoji>
-                      <InterestName>{interest.name}</InterestName>
+                      <InterestName className='dark:text-gray-400'>{interest.name}</InterestName>
                     </InterestItemNew>
                   ))}
                 </InterestsContainerNew>
@@ -758,6 +750,7 @@ const TripPlanner = (props: Props) => {
                       name="accommodationType"
                       value={values.accommodationType}
                       onChange={handleChange}
+                      className='py-2 ml-[5px] rounded-md dark:bg-gray-700 dark:text-white'
                     >
                       {options.accommodationTypes.map((option) => (
                         <option key={option} value={option}>
@@ -773,6 +766,7 @@ const TripPlanner = (props: Props) => {
                       name="travelStyle"
                       value={values.travelStyle}
                       onChange={handleChange}
+                      className='py-2 rounded-md dark:bg-gray-700 dark:text-white'
                     >
                       {options.travelStyles.map((option) => (
                         <option key={option} value={option}>
@@ -785,19 +779,13 @@ const TripPlanner = (props: Props) => {
 
                 <Label htmlFor="transportationType">
                   Transportation Type
-                  <p
-                    style={{
-                      display: "inline-block",
-                      fontSize: "10px",
-
-                      color: "#666",
-                    }}
-                  >
+                  <p className='inline-block text-gray-700 dark:text-gray-200 text-[14px] mx-1 font-medium'>
                     (e.g. car, train, bus, etc.)
                   </p>
                 </Label>
                 <Input
                   type="text"
+                  className='rounded-md dark:bg-gray-700 text-sm dark:text-white'
                   id="transportationType"
                   name="transportationType"
                   value={values.transportationType}
@@ -807,14 +795,7 @@ const TripPlanner = (props: Props) => {
 
                 <Label htmlFor="activityType">
                   Activity Type
-                  <p
-                    style={{
-                      display: "inline-block",
-                      fontSize: "10px",
-
-                      color: "#666",
-                    }}
-                  >
+                  <p className='inline-block text-gray-700 dark:text-gray-200 text-[14px] ml-1 font-normal' >
                     (select multiple options)
                   </p>
                 </Label>
@@ -831,12 +812,12 @@ const TripPlanner = (props: Props) => {
                         console.log(activity);
                       }}
                     >
-                      <InterestName>{activity}</InterestName>
+                      <InterestName className='dark:text-gray-400'>{activity}</InterestName>
                     </InterestItemNew>
                   ))}
                 </InterestsContainerNew>
                 <Label htmlFor="cuisineType">Cuisine Type</Label>
-                <CuisineTypesContainer>
+                <CuisineTypesContainer className='text-sm'>
                   {options.cuisineTypes.map((cuisineType) => (
                     <CuisineType
                       // multiple
@@ -858,7 +839,7 @@ const TripPlanner = (props: Props) => {
 
                       <br />
 
-                      <span>{cuisineType.name}</span>
+                      <span className='dark:text-gray-400'>{cuisineType.name}</span>
                     </CuisineType>
                   ))}
                 </CuisineTypesContainer>
@@ -870,10 +851,10 @@ const TripPlanner = (props: Props) => {
                 ></GenerateButton>
               </FormContainer>
             </Panel>
-            <div className="mb-6 md:mb-0 h-screen border-2 rounded-md px-4 overflow-y-scroll relative">
+            <div className="mb-6 md:mb-0 h-screen border-2 rounded-md px-4 overflow-y-scroll relative dark:bg-gray-900">
               {/* Your plan is ready msg */}
               {response && (
-                <div className="flex flex-col items-center sticky top-0 py-4 shadow-md bg-white">
+                <div className="flex flex-col items-center sticky top-0 py-4 shadow-md bg-gray-100 my-2 dark:bg-gray-700 rounded">
                   <h1 className="text-2xl font-bold text-center">
                     Your plan is ready!
                   </h1>
@@ -881,7 +862,7 @@ const TripPlanner = (props: Props) => {
                     Click on the button below to download your plan.
                   </p>
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-[#ff6f2a] hover:bg-[#f88049] text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
                       const blob = new Blob([response], {
                         type: "text/plain;charset=utf-8",
