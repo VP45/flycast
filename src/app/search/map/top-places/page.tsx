@@ -477,7 +477,7 @@ export default function Home() {
             <div className='sidebar'>
                 <div className='heading flex flex-row space-x-2 justify-start items-center'>
                     <IoArrowUndo
-                        className="text-white hover:text-gray-200 w-6 h-6"
+                        className="text-white hover:text-gray-200 w-6 h-6 cursor-pointer"
                         onClick={() => history.back()}
                     />
                     <h1>Top Places</h1>
