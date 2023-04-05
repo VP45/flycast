@@ -9,11 +9,10 @@ const About = (props: Props) => {
             backgroundPositionY: 'center',
         }}>
             <div className='flex flex-col items-start space-y-2'>
-                <h1 className='text-xl md:text-4xl font-extrabold text-white'>Wonderful Journey with Kurla ki Public </h1>
+                <h1 className='text-xl md:text-4xl font-extrabold text-white'>Wonderful Journey with Flycast </h1>
                 <p className='text-sm md:text-lg font-extralight text-gray-300'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam auctor, nisl eget ultricies tincidunt, nunc nisl
-                    aliquam mauris, vitae ultricies nunc nisl eget nunc. Sed
+                Experience the beauty of India with Flycast's attractive travel deals. 
+                Explore iconic landmarks, indulge in delicious cuisine, and create unforgettable memories on your journey.
                 </p>
             </div>
             <div>
