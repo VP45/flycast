@@ -315,7 +315,7 @@ const ResultPage = (props: Props) => {
         {" "}
         {/* Back to Home */}
         <Link href="/" className="flex flex-row items-center space-x-2">
-          <IoArrowUndo className="text-[#ff6f2a] hover:text-[#d8581d] w-6 h-6" />
+          <IoArrowUndo className="text-[#ff6f2a] hover:text-[#d8581d] w-6 h-6 cursor-pointer" />
           <p className="text-[#ff6f2a] hover:text-[#d8581d] text-lg">
             Back to Home
           </p>
@@ -865,7 +865,7 @@ const ResultPage = (props: Props) => {
         {/* Weather forecast */}
         <div className="w-full flex flex-col space-y-4">
           <div>
-            <h1 className="w-full mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
+            <h1 className="pl-4 w-full mb-4 text-xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
               Weather Forecast for{" "}
               <span className="underline underline-offset-3  decoration-4 sm:decoration-8 decoration-[#ff6f2a]">
                 Destination City

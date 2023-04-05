@@ -405,6 +405,9 @@ const TripPlanner = (props: Props) => {
         });
       }
     }
+
+
+    console.log("hwllooo", values);
   };
 
   const handleInterestClick = (interest: string) => {
@@ -511,7 +514,8 @@ const TripPlanner = (props: Props) => {
     e.preventDefault();
     setResponse('');
     setLoading(true);
-    let prompt = `Generate a personalized travel itinerary for a trip to ${values.destinationCountry} with a budget of ${values.budget}. The traveler is interested in a ${values.travelStyle} vacation and enjoys ${values.interestsNew}. They are looking for ${values.accommodationType} accommodations and prefer ${values.transportationType} transportation. The itinerary should include ${values.activitiesNew} activities and ${values.cuisineType[0].name}, ${values.cuisineType[1].name}, ${values.cuisineType[2].name} dining options. Please provide a detailed itinerary with daily recommendations for ${values.tripDuration} days, including suggested destinations, activities, and dining options. The itinerary should be written in English. Generate response as well formated markdown code`;
+    const cuisineArray = values.cuisineType.map((cuisine) => cuisine.name);
+    let prompt = `Generate a personalized travel itinerary for a trip to ${values.destinationCountry} with a budget of ${values.budget}. The traveler is interested in a ${values.travelStyle} vacation and enjoys ${values.interestsNew}. They are looking for ${values.accommodationType} accommodations and prefer ${values.transportationType} transportation. The itinerary should include ${values.activitiesNew} activities and ${cuisineArray} dining options. Please provide a detailed itinerary with daily recommendations for ${values.tripDuration} days, including suggested destinations, activities, and dining options. The itinerary should be written in English. Generate response as well formated markdown code`;
 
 
     console.log(prompt);
@@ -854,7 +858,7 @@ const TripPlanner = (props: Props) => {
             <div className="mb-6 md:mb-0 h-screen border-2 rounded-md px-4 overflow-y-scroll relative dark:bg-gray-900">
               {/* Your plan is ready msg */}
               {response && (
-                <div className="flex flex-col items-center sticky top-0 py-4 shadow-md bg-gray-100 my-2 dark:bg-gray-700 rounded">
+                <div className="z-10 flex flex-col items-center sticky top-0 py-4 shadow-md bg-gray-100 my-2 dark:bg-gray-700 rounded">
                   <h1 className="text-2xl font-bold text-center">
                     Your plan is ready!
                   </h1>
@@ -899,7 +903,7 @@ const TripPlanner = (props: Props) => {
               }
               {
                 response.length > 0 && (
-                  <div className='overflow-y-scroll'>
+                  <div className='overflow-y-scroll trip-planner'>
                     <ReactMarkdown>{response}</ReactMarkdown>
                   </div>
                 )

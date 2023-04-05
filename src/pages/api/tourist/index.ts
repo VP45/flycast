@@ -6,7 +6,7 @@ import { NextApiResponse, NextApiRequest } from "next";
 const getTouristPlaces = async (req: NextApiRequest, res: NextApiResponse) => {
   const { lat, lon } = req.body;
   const response = await axios({
-    url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${lon}&radius=50000&type=tourist_attraction&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+    url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${lon}&radius=30000&type=tourist_attraction&keyword=tourist&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
     method: "get",
     mode: "no-cors"
   })

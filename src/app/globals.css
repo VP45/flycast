@@ -51,8 +51,6 @@ input[type="checkbox"]:focus{
 
 
 
-
-
 /* map css */
 
 
@@ -74,6 +72,17 @@ input[type="checkbox"]:focus{
   top: 0;
   bottom: 0;
   min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .map {
+    left: 0%;
+    width: 100%;
+  }
 }
 
 /* 
@@ -198,6 +207,14 @@ a:hover {
 }
 
 .mapboxgl-popup-content h4 {
+  @apply text-black bg-white dark:text-white dark:bg-gray-800;
+}
+
+.mapboxgl-popup-content {
+  @apply bg-white dark:bg-gray-800;
+}
+
+.mapboxgl-popup-content h4 {
   margin: 0;
   padding: 10px;
   font-weight: 400;
@@ -246,3 +263,87 @@ a:hover {
     background-color: rgb(15, 20, 33);
   }
 } */
+
+
+/* CSS for Trip Planner */
+
+.trip-planner h1{
+  font-size: 24px;
+  margin: 0;
+  font-weight: 400;
+  line-height: 1;
+  padding: 10px 2px;
+  color: #ff6f2a;
+  font-weight: 900;
+}
+
+.trip-planner h2{
+  font-size: 20px;
+  margin: 0;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 20px 2px;
+  font-weight: 900;
+}
+
+.trip-planner h3{
+  font-size: 18px;
+  margin: 0;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 10px 0px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.trip-planner h3::before {
+  /* content: url(../../assets/fast-forward.png); */
+  content: ' ';
+  background-image: url(../../assets/fast-forward.png);
+  background-size:contain;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 10px;
+}
+
+.trip-planner ul li {
+  list-style: none;
+  position: relative;
+  padding: 3px 0 2px 25px;
+}
+
+.trip-planner ul li::before {
+  content: '*';
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+
+@media (min-width: 768px) {
+  .trip-planner h1{
+    font-size: 32px;
+  }
+  .trip-planner h2{
+    font-size: 24px;
+  }
+  .trip-planner h3{
+    font-size: 20px;
+  }
+/* 
+  .trip-planner ul li::before {
+    content: ' ';
+    position: absolute;
+    top: 6px;
+    left: 0;
+    background-image: url(../../assets/fast-forward.png);
+    background-size:contain;
+    height: 1rem;
+    width: 1rem;
+  } */
+
+  .trip-planner ul {
+    padding-left: 1rem;
+  }
+}

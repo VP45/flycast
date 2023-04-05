@@ -298,11 +298,12 @@ export default function Home() {
     }, [hotels, setHotels])
 
     useEffect(() => {
+        const theme = localStorage.getItem('theme');
         // initialising map....
         if (dstForMap) {
             const map = new mapboxgl.Map({
                 container: 'map',
-                style: 'mapbox://styles/mapbox/light-v10',
+                style: theme === 'dark' ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
                 // center: [78.9629, 20.5937]
                 center: dstForMap
                     ? [dstForMap?.lon, dstForMap?.lat]

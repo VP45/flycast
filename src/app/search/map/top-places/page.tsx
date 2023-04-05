@@ -4,7 +4,9 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
+import { BsBack } from 'react-icons/bs';
 import { IoArrowUndo } from 'react-icons/io5';
+import Navbar from '../../../../../components/Navbar';
 import { AppContext } from "../../../../../context/AppContext";
 import { Airport } from '../../../../../types/Airport';
 import { TouristPlace } from '../../../../../types/Tourism';
@@ -298,11 +300,12 @@ export default function Home() {
     }, [topPlaces, setTopPlaces])
 
     useEffect(() => {
+        const theme = localStorage.getItem('theme');
         // initialising map....
         if (dstForMap) {
             const map = new mapboxgl.Map({
                 container: 'map',
-                style: 'mapbox://styles/mapbox/light-v10',
+                style: theme === 'dark' ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
                 // center: [78.9629, 20.5937]
                 center: dstForMap
                     ? [dstForMap?.lon, dstForMap?.lat]
@@ -474,6 +477,12 @@ export default function Home() {
 
     return (
         <div className='w-screen relative h-fit'>
+            <div className='absolute top-6 left-6 z-10 md:hidden'>
+                <IoArrowUndo
+                    onClick={() => history.back()}
+                    className="text-[#ff6f2a] hover:text-[#d8581d] w-6 h-6 cursor-pointer"
+                />
+            </div>
             <div className='sidebar'>
                 <div className='heading flex flex-row space-x-2 justify-start items-center'>
                     <IoArrowUndo
