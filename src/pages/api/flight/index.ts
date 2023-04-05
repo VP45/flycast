@@ -1,7 +1,7 @@
 var Amadeus = require('amadeus');
-const axios = require("axios").create({
-    baseUrl: "https://jsonplaceholder.typicode.com/",
-});
+// const axios = require("axios").create({
+//     baseUrl: "https://jsonplaceholder.typicode.com/",
+// });
 import { NextApiResponse, NextApiRequest } from "next";
 
 var amadeus = new Amadeus({

@@ -138,9 +138,10 @@ const FlightCard = ({
                 <p className="text-xs text-gray-500">Price per adult</p>
               </div>
             </div>
-            <button className="w-24 h-7 sm:w-32 sm:h-11 rounded flex my-btn-color mx-2 justify-center place-items-center">
+            <a href={`https://www.skyscanner.net/transport/flights/${flight?.itineraries[0].segments[0].departure.iataCode}/${flight?.itineraries[0]?.segments[flight?.itineraries[0]?.segments.length-1].departure.iataCode}/230411/?adultsv2=1&cabinclass=economy&currency=INR&preferdirects=true&referralServiceVersion=meeseeks-referral-service-v1&rtn=0&showDirectDays=true&sortby=cheapest`}
+            target="_blank" className="w-24 h-7 sm:w-32 sm:h-11 rounded flex my-btn-color mx-2 justify-center place-items-center">
               <div className="text-white">Book</div>
-            </button>
+            </a>
           </div>
         </div>
       </div>

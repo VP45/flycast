@@ -10,7 +10,7 @@ import { FaBed, FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import parse from "html-react-parser";
 import { Element } from "html-react-parser";
 import FlightCard from "../../../components/FlightCard";
-import Flights from "../../../assets/flights.json";
+// import Flights from "../../../assets/flights.json";
 import { IoIosAirplane } from "react-icons/io";
 import GaugeChart from 'react-gauge-chart'
 import { useRouter } from "next/navigation";
@@ -163,17 +163,58 @@ const ResultPage = (props: Props) => {
   }
 
 
+  function mapTimeWithDay(tempDepTimeHour: number, tempDepTimeMinute: number) {
+    let departure_time = "Morning";
+    if (
+      (tempDepTimeHour > 0 || (tempDepTimeHour == 0 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 4 || (tempDepTimeHour == 4 && tempDepTimeMinute == 0))) {
+      departure_time = "Late_Night";
+    }
+    else if (
+      (tempDepTimeHour > 4 || (tempDepTimeHour == 4 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 8 || (tempDepTimeHour == 8 && tempDepTimeMinute == 0))) {
+      departure_time = "Early_Morning";
+    }
+    else if (
+      (tempDepTimeHour > 8 || (tempDepTimeHour == 8 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 12 || (tempDepTimeHour == 12 && tempDepTimeMinute == 0))) {
+      departure_time = "Morning";
+    }
+    else if (
+      (tempDepTimeHour > 12 || (tempDepTimeHour == 12 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 16 || (tempDepTimeHour == 16 && tempDepTimeMinute == 0))) {
+      departure_time = "Afternoon";
+    }
+    else if (
+      (tempDepTimeHour > 16 || (tempDepTimeHour == 16 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 20 || (tempDepTimeHour == 20 && tempDepTimeMinute == 0))) {
+      departure_time = "Evening";
+    }
+    else if (
+      (tempDepTimeHour > 20 || (tempDepTimeHour == 20 && tempDepTimeMinute >= 1))
+      &&
+      (tempDepTimeHour < 24 || (tempDepTimeHour == 0 && tempDepTimeMinute == 0))) {
+      departure_time = "Night";
+    }
+    return departure_time;
+  }
+
   function predictFlightPrice(flight: FlightType, dictionaries: Dictionaries, class_type: String) {
     if (!srcAirport || !dstAirport) return;
     const url = process.env.NEXT_PUBLIC_BASE_URL + "/ml";
     console.log("cheapest flight", flight)
     // getting date ready to be sent to the model :D
-    const airline = dictionaries.carriers[flight.validatingAirlineCodes[0]];
+    let airline = dictionaries.carriers[flight.validatingAirlineCodes[0]];
 
-    const flightName = dictionaries?.aircraft?.[flight?.itineraries[0]?.segments[0]?.aircraft?.code];
+    let flightName = dictionaries?.aircraft?.[flight?.itineraries[0]?.segments[0]?.aircraft?.code];
     const source_city = srcAirport?.city;
-    // const departure_time = dictionaries?.timeOfDay?.[flight?.itineraries[0]?.segments[0]?.departure?.at?.slice(11, 13)];
-    // const arrival_time = dictionaries?.timeOfDay?.[flight?.itineraries[0]?.segments[0]?.arrival?.at?.slice(11, 13)];
+    let departure_time = "Morning";
+    let arrival_time = "Morning";
     const destination_city = dstAirport?.city;
     const duration = flight?.itineraries[0]?.duration;
     const days_left = Math.floor((new Date(flight?.itineraries[0]?.segments[0]?.departure?.at).getTime() - new Date().getTime()) / (1000 * 3600 * 24));
@@ -181,18 +222,18 @@ const ResultPage = (props: Props) => {
     const no_of_stops = flight?.itineraries[0]?.segments.length - 1;
     const stops = no_of_stops === 0 ? "zero" : no_of_stops === 1 ? "one" : "two_or_more";
 
-    console.table({
-      airline,
-      flightName,
-      source_city,
-      // departure_time,
-      stops,
-      // arrival_time,
-      destination_city,
-      class_type,
-      duration,
-      days_left
-    })
+    // console.table({
+    //   airline,
+    //   flightName,
+    //   source_city,
+    //   // departure_time,
+    //   stops,
+    //   // arrival_time,
+    //   destination_city,
+    //   class_type,
+    //   duration,
+    //   days_left
+    // })
 
 
     /*
@@ -204,6 +245,59 @@ const ResultPage = (props: Props) => {
     Late_Night        1306
     */
 
+    // convert time of day as shown below
+    /*
+      00:01 - 04:00 - Late_Night
+      04:01 - 08:00 - Early_Morning
+      08:01 - 12:00 - Morning
+      12:01 - 16:00 - Afternoon
+      16:01 - 20:00 - Evening
+      20:01 - 00:00 - Night
+    */
+    // map the time of day to the above
+    // console.log("departure_time", departure_time)
+
+    const tempDepTimeHour = parseInt(flight?.itineraries[0]?.segments[0]?.departure?.at?.slice(11, 13));
+    const tempDepTimeMinute = parseInt(flight?.itineraries[0]?.segments[0]?.departure?.at?.slice(14, 16));
+    const tempArrTimeHour = parseInt(flight?.itineraries[0]?.segments[0]?.arrival?.at?.slice(11, 13));
+    const tempArrTimeMinute = parseInt(flight?.itineraries[0]?.segments[0]?.arrival?.at?.slice(14, 16));
+    departure_time = mapTimeWithDay(tempDepTimeHour, tempDepTimeMinute);
+    arrival_time = mapTimeWithDay(tempArrTimeHour, tempArrTimeMinute);
+
+    // mapping airline name to the model
+    // Vistara      127859
+    // Air_India     80892
+    // Indigo        43120
+    // GO_FIRST      23173
+    // AirAsia       16098
+    // SpiceJet       9011
+    if (airline.toLowerCase() === "Air India".toLowerCase()) {
+      airline = "Air_India";
+      flightName = "AI-401";
+    }
+    else if (airline.toLowerCase() === "IndiGo".toLowerCase()) {
+      airline = "Indigo";
+      flightName = "6E-102";
+    }
+    else if (airline.toLowerCase() === "SpiceJet".toLowerCase()) {
+      airline = "SpiceJet";
+      flightName = "SG-1031";
+    }
+    else if (airline.toLowerCase() === "Vistara".toLowerCase()) {
+      airline = "Vistara";
+      flightName = "UK-613";
+    }
+    else if (airline.toLowerCase() === "AirAsia India".toLowerCase()) {
+      airline = "AirAsia";
+      flightName = "I5-1228";
+    }
+    else if (airline.toLowerCase() === "Go First".toLowerCase()) {
+      airline = "GO_FIRST";
+      flightName = "G8-101";
+    }
+
+
+
     // convert bengaluru to bangalore
     if (srcAirport?.city === "Bengaluru") {
       srcAirport.city = "Bangalore";
@@ -212,7 +306,30 @@ const ResultPage = (props: Props) => {
       dstAirport.city = "Bangalore";
     }
 
+    // convert format of duration to hours
+    // PT16H30M -> 16.5
+    // PT1H30M -> 1.5
+    let durationInHours = 0;
+    if (duration?.includes("H")) {
+      durationInHours = parseInt(duration?.slice(2, duration?.indexOf("H")));
+    }
+    if (duration?.includes("M")) {
+      durationInHours += parseInt(duration?.slice(duration?.indexOf("H") + 1, duration?.indexOf("M"))) / 60;
+    }
+    durationInHours = parseFloat(durationInHours.toFixed(2));
+    // calculate days left to departure from today in days using departure date
+    let daysLeft = Math.floor((new Date(flight?.itineraries[0]?.segments[0]?.departure?.at).getTime() - new Date().getTime()) / (1000 * 3600 * 24));
+    console.log("daysLeft", daysLeft)
+
+
+
+    console.table("flight to be send to model", [airline, flightName, srcAirport?.city, departure_time, stops, arrival_time, dstAirport?.city, classType, durationInHours, daysLeft])
+
     // convert everything according to the model ....... IMP IMP IMP IMP IMP
+
+    // convert airline code type to the model
+    // AIRASIA 320 -> AI-320
+    // VISTARA 320 -> VI-320
 
     fetch(url, {
       headers: {
@@ -220,7 +337,7 @@ const ResultPage = (props: Props) => {
       },
       method: "POST",
       body: JSON.stringify({
-        input: ["SpiceJet", "SG-8152", srcAirport?.city, "Early_Morning", "zero", "Morning", dstAirport?.city, classType, 2.11, 1]
+        input: [airline, flightName, srcAirport?.city, departure_time, stops, arrival_time, dstAirport?.city, classType, durationInHours, daysLeft]
       })
     })
       .then(res => res.json())
@@ -231,7 +348,7 @@ const ResultPage = (props: Props) => {
         } else {
           setWillPriceDrop(true);
         }
-        const tempPercentage = Math.floor(((data["PredictedPrice"] - parseInt(flight?.price?.total)) / parseInt(flight?.price?.total)) * 100);
+        const tempPercentage = Math.floor((Math.abs(data["PredictedPrice"] - parseInt(flight?.price?.total)) / parseInt(flight?.price?.total)) * 100);
         setPredictionPercentage(tempPercentage);
       })
       .catch((err) => console.log(err))
@@ -288,7 +405,21 @@ const ResultPage = (props: Props) => {
 
     fetchHotels(DstAirport);
     fetchTouristPlaces(DstAirport);
-    // fetchFlights(SrcAirport, DstAirport, classType, date, adults, childrenn)
+    fetchFlights(SrcAirport, DstAirport, classType, date, adults, childrenn)
+
+    // const tempDepTimeHour = parseInt(Flights.data[0]?.itineraries[0]?.segments[0]?.departure?.at?.slice(11, 13));
+    // const tempDepTimeMinute = parseInt(Flights.data[0]?.itineraries[0]?.segments[0]?.departure?.at?.slice(14, 16));
+    // const tempArrTimeHour = parseInt(Flights.data[0]?.itineraries[0]?.segments[0]?.arrival?.at?.slice(11, 13));
+    // const tempArrTimeMinute = parseInt(Flights.data[0]?.itineraries[0]?.segments[0]?.arrival?.at?.slice(14, 16));
+    // let departure_time = mapTimeWithDay(tempDepTimeHour, tempDepTimeMinute);
+    // let arrival_time = mapTimeWithDay(tempArrTimeHour, tempArrTimeMinute);
+    // console.log("tempDepTimeHour", departure_time);
+    // console.log("tempDepTimeMinute", tempArrTimeHour,tempArrTimeMinute);
+
+    // let flightName = Flights?.dictionaries?.aircraft?.[Flights.data[0]?.itineraries[0]?.segments[0]?.aircraft?.code];
+    // console.log("flightName", flightName);
+
+
   }, []);
 
   useEffect(() => {
@@ -300,7 +431,7 @@ const ResultPage = (props: Props) => {
           const flightForPrediction = flights.data.find((flight: FlightType) => allowedAirlines.includes(flight.validatingAirlineCodes[0]));
           if (flightForPrediction) {
             setFlightPred(flightForPrediction)
-            // predictFlightPrice(flightForPrediction, flights.dictionaries, classType);
+            predictFlightPrice(flightForPrediction, flights.dictionaries, classType);
           } else {
             console.log("no flight found for prediction");
           }
@@ -333,7 +464,7 @@ const ResultPage = (props: Props) => {
                     nrOfLevels={30}
                     colors={["#ff1c30", "#1cff24"]}
                     arcWidth={0.3}
-                    percent={0.73}
+                    percent={predictionPercentage/100}
                     textColor={"#ff6f2a"}
                     style={{ display: "flex", height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}
                   />
@@ -353,15 +484,15 @@ const ResultPage = (props: Props) => {
               </div>
               <div className="w-full">
                 {
-                  Flights?.data &&
-                  Array.isArray(Flights?.data) && flightPred && (
+                  flights?.data &&
+                  Array.isArray(flights?.data) && flightPred && (
                     <FlightCard
                       timepass={0}
                       flight={flightPred}
                       classType={classType}
                       dstAirport={dstAirport}
                       srcAirport={srcAirport}
-                      dictionaries={Flights?.dictionaries}
+                      dictionaries={flights?.dictionaries}
                     />)
                 }
               </div>
@@ -371,14 +502,14 @@ const ResultPage = (props: Props) => {
         {/* flight cards */}
         <div className="w-full max-w-6xl flex flex-col space-y-6 px-2 md:p-0">
           {
-            Flights?.data &&
-              Array.isArray(Flights?.data) &&
-              Flights?.data.length > 5
+            flights?.data &&
+              Array.isArray(flights?.data) &&
+              flights?.data.length > 5
               ?
               (
                 // apply pagination if flights are more than 5 :D
 
-                Flights?.data.slice(startCard, endCard).map((flight: FlightType, index) => {
+                flights?.data.slice(startCard, endCard).map((flight: FlightType, index) => {
                   return (<FlightCard
                     timepass={startCard + index}
                     key={index}
@@ -386,13 +517,13 @@ const ResultPage = (props: Props) => {
                     classType={classType}
                     dstAirport={dstAirport}
                     srcAirport={srcAirport}
-                    dictionaries={Flights?.dictionaries}
+                    dictionaries={flights?.dictionaries}
                   />)
                 })
               )
               :
               (
-                Flights?.data?.map((flight: FlightType, index) => {
+                flights?.data?.map((flight: FlightType, index) => {
                   return (
                     <FlightCard
                       timepass={index}
@@ -401,7 +532,7 @@ const ResultPage = (props: Props) => {
                       classType={classType}
                       dstAirport={dstAirport}
                       srcAirport={srcAirport}
-                      dictionaries={Flights?.dictionaries}
+                      dictionaries={flights?.dictionaries}
                     />
                   );
                 })
@@ -409,9 +540,9 @@ const ResultPage = (props: Props) => {
           }
         </div>
         {
-          Flights?.data &&
-          Array.isArray(Flights?.data) &&
-          Flights?.data.length > 5
+          flights?.data &&
+          Array.isArray(flights?.data) &&
+          flights?.data.length > 5
           && (
             <div>
               <nav aria-label="Page navigation example">
@@ -430,7 +561,7 @@ const ResultPage = (props: Props) => {
                     </button>
                   </li>
                   {
-                    Array.from(Array(Math.ceil(Flights?.data.length / 5)).keys()).slice(0, 5).map((page, index) => {
+                    Array.from(Array(Math.ceil(flights?.data.length / 5)).keys()).slice(0, 5).map((page, index) => {
                       return (
                         <li key={index}>
                           <button
@@ -450,7 +581,7 @@ const ResultPage = (props: Props) => {
                     })
                   }
                   {
-                    Flights?.data.length > 5 && (
+                    flights?.data.length > 5 && (
                       <li>
                         <button
                           className={
@@ -466,7 +597,7 @@ const ResultPage = (props: Props) => {
                   <li>
                     <button
                       onClick={() => {
-                        if (endCard < Flights?.data.length) {
+                        if (endCard < flights?.data.length) {
                           setStartCard(startCard + 5);
                           setEndCard(endCard + 5);
                         }
