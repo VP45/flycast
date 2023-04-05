@@ -602,8 +602,8 @@ const TripPlanner = (props: Props) => {
       {/* title */}
       <div className='flex flex-col items-center justify-center mt-12 mb-6'>
         <h1 className='text-4xl font-bold text-gray-800 dark:text-white'>Trip Planner</h1>
-        <p className='text-gray-500 md:mb-12 dark:text-gray-300'>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem
+        <p className='text-gray-500 md:text-lg md:mt-2 md:mb-12 dark:text-gray-300'>
+          Flycast's trip planner is a powerful tool that helps travelers plan their dream vacation. With customizable itineraries and travel recommendations.
         </p>
       </div>
       <div className="container mx-auto">
