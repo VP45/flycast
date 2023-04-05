@@ -40,6 +40,8 @@ const SearchForm = (props: Props) => {
     setClassType,
     date,
     setDate,
+    isRoundTrip,
+    setIsRoundTrip
   }: ContextType = useContext(AppContext);
 
   const router = useRouter();
@@ -139,6 +141,7 @@ const SearchForm = (props: Props) => {
                   onClick={(e) => {
                     e.preventDefault();
                     setIsOneWay(0);
+                    setIsRoundTrip(false)
                   }}
                   className={`inline-block w-full p-4 ${isOneWay == 0
                     ? "my-btn-color active text-white"
@@ -154,6 +157,7 @@ const SearchForm = (props: Props) => {
                   onClick={(e) => {
                     e.preventDefault();
                     setIsOneWay(1);
+                    setIsRoundTrip(true)
                   }}
                   className={`inline-block w-full p-4 ring-0 ${isOneWay == 1
                     ? "my-btn-color active text-white"

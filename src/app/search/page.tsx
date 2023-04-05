@@ -35,7 +35,9 @@ const ResultPage = (props: Props) => {
     // setDstForMap
     adults,
     childrenn,
-    date
+    date,
+    isRoundTrip,
+    setIsRoundTrip
   } = useContext(AppContext);
 
   const [srcAirport, setSrcAirport] = useState<Airport>({
@@ -147,7 +149,8 @@ const ResultPage = (props: Props) => {
         classType: classType,
         date: date,
         adults: adults,
-        children: children
+        children: children,
+        isRoundTrip: isRoundTrip,
       }),
     })
       .then((res) => res.json())
