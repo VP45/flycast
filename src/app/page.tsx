@@ -6,6 +6,8 @@ import Hero from "../../components/Hero";
 import SearchForm from "../../components/SearchForm";
 import TopCities from "../../components/TopCities";
 import About from "../../components/About";
+import ServiceCard from "../../components/ServiceCard";
+import Service from "../../components/Service";
 
 export default function Home() {
   return (
@@ -13,6 +15,8 @@ export default function Home() {
       <Hero />
       <SearchForm />
       <About/>
+      {/* <ServiceCard /> */}
+      {/* <Service /> */}
       <TopCities />
     </>
   );
