@@ -347,3 +347,21 @@ a:hover {
     padding-left: 1rem;
   }
 }
+
+
+
+
+
+
+/* 
+.skiptranslate{
+  display: none;
+} */
+
+#google_translate_element > div > div > span > a{
+  display: flex;
+}
+
+#google_translate_element > div > div {
+  display: flex;
+}

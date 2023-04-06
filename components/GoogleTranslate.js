@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SelectPicker } from "rsuite";
+import SelectPicker from "rsuite/SelectPicker";
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import React from 'react'
 
@@ -11,7 +11,7 @@ const GoogleTranslate = () => {
         { label: 'English', value: '/auto/en' },
         { label: 'हिन्दी', value: '/auto/hi' },
         { label: "मराठी", value: '/auto/mr' },
-        { label: 'ગુજરાતી' , value: '/auto/gu' },
+        { label: 'ગુજરાતી', value: '/auto/gu' },
         { label: `Русский`, value: '/auto/ru' },
         { label: 'Polski', value: '/auto/pl' },
         { label: 'Deutsch', value: '/auto/de' },
@@ -50,7 +50,7 @@ const GoogleTranslate = () => {
         new window.google.translate.TranslateElement({
             pageLanguage: 'auto',
             autoDisplay: false,
-            includedLanguages: "ru,en,pl", // If you remove it, by default all google supported language will be included
+            includedLanguages: "hi,en,mr, gu", // If you remove it, by default all google supported language will be included
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE
         },
             'google_translate_element');
@@ -59,8 +59,9 @@ const GoogleTranslate = () => {
     return (
         <>
 
-            <div id="google_translate_element" style={{ width: '0px', height: '0px', position: 'absolute', left: '50%', zIndex: -99999 }}></div>
-            <SelectPicker
+            <div id="google_translate_element" ></div>
+
+            {/* <SelectPicker
                 data={languages}
                 style={{ width: 100 }}
                 placement="bottomEnd"
@@ -70,7 +71,7 @@ const GoogleTranslate = () => {
                 className={'notranslate'}
                 menuClassName={'notranslate'}
                 onSelect={(e, m, evt) => langChange(e, m, evt)}
-                placeholder="Lang" />
+                placeholder="Lang" /> */}
         </>
     )
 }

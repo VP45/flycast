@@ -481,7 +481,7 @@ const ResultPage = (props: Props) => {
                     <span className={willPriceDrop ? "text-[#04ff30]" : "text-red-600"}>{predictionPercentage}%*</span>
                   </h1>
                   <p>
-                    • There is a 73% chance of a {willPriceDrop ? "drop" : "rise"} in price
+                    • There is a {predictionPercentage}% chance of a {willPriceDrop ? "drop" : "rise"} in price
                   </p>
                 </div>
               </div>
