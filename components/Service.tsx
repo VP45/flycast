@@ -59,62 +59,21 @@ const Service = () => {
                 </span>{" "}
             </h1>
             <div className='md:w-[90%] md:ml-[5%] md:grid lg:grid-cols-3 md:grid-cols-2'>
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60 object-fill' src={Flight} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Flight Price Prediction</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Predicts flight prices for efficient travel planning.</p>
-                    </div>
-                </div>
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60' src={Hotel} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Hotel Recommendation</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Recommends hotels based on user preferences and reviews.</p>
-                    </div>
-                </div>
-                
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60' src={Tour} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Tourist Place Recommendation</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Recommends tourist places based on user preferences and reviews.</p>
-                    </div>
-                </div>
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60' src={Map} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Dynamic Map</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Interactive maps with location and navigation features.</p>
-                    </div>
-                </div>
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60' src={Trip} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Trip Planner</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Helps plan trips with itinerary and expense management.</p>
-                    </div>
-                </div>
-                <div className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
-                    <div className='border-gray-900 dark:border-slate-400 border-[3px] rounded-full h-1/2 ml-3'>
-                        <Image className='w-60' src={Weather} alt="" />
-                    </div>
-                    <div>
-                        <h5 className='text-center text-2xl font-semibold'>Weather Forcasting</h5>
-                        <p className='mb-3 mt-2 px-4 dark:text-gray-400 md:text-lg'>Provides weather updates of next 6 days for travel planning and safety</p>
-                    </div>
-                </div>
-                
+                {
+                    ServiceData.map((data, index) => {
+                        return (
+                            <div key={index} className='rounded-xl m-3 mb-8 lg:px-5 flex flex-row space-x-5  max-w-sm py-4 shadow-sm bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800'>
+                                <div className='border-gray-900 dark:border-slate-400 rounded-full border-[3px] h-fit p-2'>
+                                    <img className='w-[100px] aspect-auto' src={data?.image} alt="" />
+                                </div>
+                                <div className='p-2 flex flex-col items-start space-y-2'>
+                                    <h5 className='text-2xl font-semibold'>{data?.service}</h5>
+                                    <p className='mb-3 mt-2 dark:text-gray-400 md:text-lg'>{data?.description}</p>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
 

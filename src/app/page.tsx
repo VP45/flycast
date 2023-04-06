@@ -15,8 +15,7 @@ export default function Home() {
       <Hero />
       <SearchForm />
       <About/>
-      {/* <ServiceCard /> */}
-      {/* <Service /> */}
+      <Service />
       <TopCities />
     </>
   );
