@@ -607,7 +607,7 @@ const TripPlanner = (props: Props) => {
         </p>
       </div>
       <div className="container mx-auto">
-        {/* Section: Design Block */}
+        {/* Section: Design Block ... */}
         <section className="mb-32 text-gray-800 dark:text-white">
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-x-12 lg:mb-0">
             {/* <div className="mb-12 lg:mb-0">
