@@ -11,7 +11,7 @@ const About = (props: Props) => {
             <div className='flex flex-col items-start space-y-2'>
                 <h1 className='text-xl md:text-4xl font-extrabold text-white'>Wonderful Journey with Flycast </h1>
                 <p className='text-sm md:text-lg font-extralight text-gray-300'>
-                Experience the beauty of India with Flycast's attractive travel deals. 
+                Experience the beauty of India with Flycast attractive travel deals. 
                 Explore iconic landmarks, indulge in delicious cuisine, and create unforgettable memories on your journey.
                 </p>
             </div>
