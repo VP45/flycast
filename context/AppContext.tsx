@@ -6,7 +6,7 @@ import { ContextType } from "../types/ContextTypes";
 import { HotelType } from "../types/Hotels";
 import { TouristPlace } from "../types/Tourism";
 
-export const AppContext = React.createContext<ContextType>({ source: "", setSource: () => { }, dst: "", setDst: () => { }, departDate: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setDepartDate: () => { }, arrivalDate: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setArrivalDate: () => { }, adults: 1, setAdults: () => { }, childrenn: 0, setChildrenn: () => { }, airports: [], setAirports: () => { }, classType: "Economy", setClassType: () => { }, date: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setDate: () => { }, hotels: [], setHotels: () => { }, topPlaces: [], setTopPlaces: () => { }, dstForMap: { "id": 8115, "name": "Delhi Hindon Airport", "iata": "QAH", "icao": "VIDX", "city": "Delhi", "lat": 28.707708, "lon": 77.359734, "country": "India", "alt": 701, "size": 2973, "timezone": { "name": "Asia/Calcutta", "offset": 19800, "offsetHours": "5:30", "abbr": "IST", "abbrName": "India Standard Time", "isDst": false }, "countryId": 102}, setDstForMap: () => { } , showTripPlanner: false, setShowTripPlanner : ()=>{} } );
+export const AppContext = React.createContext<ContextType>({ source: "", setSource: () => { }, dst: "", setDst: () => { }, departDate: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setDepartDate: () => { }, arrivalDate: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setArrivalDate: () => { }, adults: 1, setAdults: () => { }, childrenn: 0, setChildrenn: () => { }, airports: [], setAirports: () => { }, classType: "Economy", setClassType: () => { }, date: { startDate: new Date(), endDate: new Date().setMonth(3).toString() }, setDate: () => { }, hotels: [], setHotels: () => { }, topPlaces: [], setTopPlaces: () => { }, dstForMap: { "id": 8115, "name": "Delhi Hindon Airport", "iata": "QAH", "icao": "VIDX", "city": "Delhi", "lat": 28.707708, "lon": 77.359734, "country": "India", "alt": 701, "size": 2973, "timezone": { "name": "Asia/Calcutta", "offset": 19800, "offsetHours": "5:30", "abbr": "IST", "abbrName": "India Standard Time", "isDst": false }, "countryId": 102}, setDstForMap: () => { } , showTripPlanner: false, setShowTripPlanner : ()=>{}, isRoundTrip:false, setIsRoundTrip : ()=>{} } );
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // const [data, setData] = useState("Parteek")
@@ -23,6 +23,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     endDate: new Date().setMonth(3).toString(), /// ifff errrr  change to Date().setMonth(3) only   🌿🌿🌿
   });
   const [adults, setAdults] = useState(1);
+  const [isRoundTrip, setIsRoundTrip] = useState(false);
   const [childrenn, setChildrenn] = useState(0);
   const [airports, setAirports] = useState<Airports>([]);
   const [classType, setClassType] = useState("Economy");
@@ -83,7 +84,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         dstForMap,
         setDstForMap,
         showTripPlanner,
-        setShowTripPlanner
+        setShowTripPlanner,
+        isRoundTrip,
+        setIsRoundTrip
       }}
     >
       {children}

@@ -546,27 +546,6 @@
         "countryId": 102
     },
     {
-        "id": 8115,
-        "name": "Delhi Hindon Airport",
-        "iata": "QAH",
-        "icao": "VIDX",
-        "city": "Delhi",
-        "lat": 28.707708,
-        "lon": 77.359734,
-        "country": "India",
-        "alt": 701,
-        "size": 2973,
-        "timezone": {
-            "name": "Asia/Calcutta",
-            "offset": 19800,
-            "offsetHours": "5:30",
-            "abbr": "IST",
-            "abbrName": "India Standard Time",
-            "isDst": false
-        },
-        "countryId": 102
-    },
-    {
         "id": 822,
         "name": "Delhi Indira Gandhi International Airport",
         "iata": "DEL",

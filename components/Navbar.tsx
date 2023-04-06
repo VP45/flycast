@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AppContext } from "../context/AppContext";
+import GoogleTranslate from "./GoogleTranslate";
+
 const Navbar = () => {
   const router = useRouter();
 

@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react'
 import styled from "styled-components";
 import { AppContext } from "../context/AppContext";
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import markdownToTxt from 'markdown-to-txt';
+
 type Props = {};
 const Panel = styled.div`
   display: flex;
@@ -868,7 +870,7 @@ const TripPlanner = (props: Props) => {
                   <button
                     className="bg-[#ff6f2a] hover:bg-[#f88049] text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
-                      const blob = new Blob([response], {
+                      const blob = new Blob([markdownToTxt(response)], {
                         type: "text/plain;charset=utf-8",
                       });
                       const url = URL.createObjectURL(blob);

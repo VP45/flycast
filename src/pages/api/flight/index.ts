@@ -1,7 +1,7 @@
 var Amadeus = require('amadeus');
-const axios = require("axios").create({
-    baseUrl: "https://jsonplaceholder.typicode.com/",
-});
+// const axios = require("axios").create({
+//     baseUrl: "https://jsonplaceholder.typicode.com/",
+// });
 import { NextApiResponse, NextApiRequest } from "next";
 
 var amadeus = new Amadeus({
@@ -17,21 +17,38 @@ function formatDate(dateString: string) {
 }
 
 const getFlights = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { src, dst, classType, date, adults, children } = req.body;
-    amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: src,
-        destinationLocationCode: dst,
-        departureDate: formatDate(date.startDate),
-        adults: adults,
-        children: children,
-        max: 50,
-        currencyCode: "INR",
+    const { src, dst, classType, date, adults, children, isRoundTrip } = req.body;
+    if (isRoundTrip) {
+        amadeus.shopping.flightOffersSearch.get({
+            originLocationCode: src,
+            destinationLocationCode: dst,
+            departureDate: formatDate(date.startDate),
+            adults: adults,
+            children: children,
+            max: 50,
+            currencyCode: "INR",
+            returnDate: formatDate(date.endDate)
+        }).then(function (response: any) {
+            res.status(200).json(response.body);
+        }).catch(function (responseError: any) {
+            res.status(500).json({ message: "Error", error: responseError });
+        });
+    } else {
+        amadeus.shopping.flightOffersSearch.get({
+            originLocationCode: src,
+            destinationLocationCode: dst,
+            departureDate: formatDate(date.startDate),
+            adults: adults,
+            children: children,
+            max: 50,
+            currencyCode: "INR",
 
-    }).then(function (response: any) {
-        res.status(200).json(response.body);
-    }).catch(function (responseError: any) {
-        res.status(500).json({ message: "Error", error: responseError });
-    });
+        }).then(function (response: any) {
+            res.status(200).json(response.body);
+        }).catch(function (responseError: any) {
+            res.status(500).json({ message: "Error", error: responseError });
+        });
+    }
 };
 
 export default async function handler(

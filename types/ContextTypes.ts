@@ -31,4 +31,6 @@ export type ContextType = {
   setDstForMap: React.Dispatch<React.SetStateAction<Airport>>;
   showTripPlanner: boolean;
   setShowTripPlanner: React.Dispatch<React.SetStateAction<boolean>>;
+  isRoundTrip: boolean;
+  setIsRoundTrip: React.Dispatch<React.SetStateAction<boolean>>;
 };
