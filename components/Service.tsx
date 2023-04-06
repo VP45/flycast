@@ -51,7 +51,7 @@ const Service = () => {
     ];
 
     return (
-        <div className='w-full space-y-4 mt-16 mb-8'>
+        <div className='w-full space-y-4 mt-16 mb-8' id='services'>
             <h1 className="sm:mb-4 p-4 text-2xl sm:text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
                 We Believe Everyone Deserves Quality{" "}
                 <span className="underline underline-offset-3 decoration-4 sm:decoration-8 decoration-[#ff6f2a]">

@@ -17362,7 +17362,7 @@ const Hero = (props: Props) => {
             Click on following button to get more info...
           </p>
           <a
-            href="#"
+            href="#services"
             className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg my-btn-color"
           >
             More Info...
