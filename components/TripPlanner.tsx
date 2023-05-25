@@ -549,7 +549,9 @@ const TripPlanner = (props: Props) => {
       body: JSON.stringify({ prompt: prompt }),
     })
     if (!response.ok) {
-      throw new Error(response.statusText);
+      // throw new Error(response.statusText);
+      console.log(response.statusText);
+      return;
     }
 
     // This data is a ReadableStream
