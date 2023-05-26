@@ -10,16 +10,20 @@ import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AppContext } from "../context/AppContext";
 import GoogleTranslate from "./GoogleTranslate";
-
+import { useSession } from "next-auth/react";
+import MenuDropdown from "./MenuDropdown";
 const Navbar = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   // Testing codes starts *********************************************
 
-  const context = useContext(AppContext);
+  // const context = useContext(AppContext);
 
   // console.log("Hellooo", context.data);
   // Testing codes ends ***********************************************
+
+  console.log("session", session);
   return (
     <nav className="bg-white px-2 sm:px-4 pb-2.5 pt-2.5 my-bg-color sticky w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -43,14 +47,20 @@ const Navbar = () => {
                         <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
                     </button> */}
 
-          <button
-            onClick={() => router.push("/")}
-            className={` inline-flex items-center justify-center px-3 py-1.5 mr-3 text-base font-medium text-center text-white rounded-lg my-btn-color`}
-          >
-            Login
-          </button>
+          {
+            session ? (
+              <MenuDropdown session={session} />
+            ) : (
+              <Link href="/login"
+                className={` inline-flex items-center justify-center px-3 py-1.5 mr-3 text-base font-medium text-center text-white rounded-lg my-btn-color`}
+              >
+                Login
+              </Link>
+            )
+          }
+
         </div>
-        <div
+        {/* <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
@@ -66,7 +76,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/services"
+                href="#services"
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Services
@@ -89,7 +99,7 @@ const Navbar = () => {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </nav>
   );
